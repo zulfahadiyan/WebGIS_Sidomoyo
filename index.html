@@ -194,7 +194,6 @@ button,input,select{font-family:inherit}
         </ul>
       </section>
 
-      
       <section class="panel">
         <div class="panel-head">
           <div>
@@ -264,6 +263,31 @@ button,input,select{font-family:inherit}
   const streetBtn = document.getElementById('streetBtn');
   const satelliteBtn = document.getElementById('satelliteBtn');
 
+  // Admin Elements
+  const ghOwnerInput = document.getElementById('ghOwnerInput');
+  const ghRepoInput = document.getElementById('ghRepoInput');
+  const ghTokenInput = document.getElementById('ghTokenInput');
+  const toggleEditBtn = document.getElementById('toggleEditBtn');
+  const saveGithubBtn = document.getElementById('saveGithubBtn');
+  const exportBackupBtn = document.getElementById('exportBackupBtn');
+  const adminStatus = document.getElementById('adminStatus');
+
+  // Restore saved credentials from localStorage
+  if (ghOwnerInput) ghOwnerInput.value = localStorage.getItem('gh_owner') || '';
+  if (ghRepoInput && !localStorage.getItem('gh_repo')) ghRepoInput.value = 'WebGIS_Sidomoyo';
+  else if (ghRepoInput) ghRepoInput.value = localStorage.getItem('gh_repo') || 'WebGIS_Sidomoyo';
+  if (ghTokenInput) ghTokenInput.value = localStorage.getItem('gh_token') || '';
+
+  function saveCredentials() {
+    if (ghOwnerInput) localStorage.setItem('gh_owner', ghOwnerInput.value.trim());
+    if (ghRepoInput) localStorage.setItem('gh_repo', ghRepoInput.value.trim());
+    if (ghTokenInput) localStorage.setItem('gh_token', ghTokenInput.value.trim());
+  }
+
+  if (ghOwnerInput) ghOwnerInput.addEventListener('change', saveCredentials);
+  if (ghRepoInput) ghRepoInput.addEventListener('change', saveCredentials);
+  if (ghTokenInput) ghTokenInput.addEventListener('change', saveCredentials);
+
   function sendMapMessage(payload) {
     if (mapFrame && mapFrame.contentWindow) {
       mapFrame.contentWindow.postMessage(payload, '*');
@@ -310,6 +334,43 @@ button,input,select{font-family:inherit}
   streetBtn.addEventListener('click', function() { setBase('osm'); });
   satelliteBtn.addEventListener('click', function() { setBase('sat'); });
 
+  // Admin listeners
+  if (toggleEditBtn) {
+    toggleEditBtn.addEventListener('click', function() {
+      saveCredentials();
+      sendMapMessage({ type: 'toggleEdit' });
+    });
+  }
+
+  if (saveGithubBtn) {
+    saveGithubBtn.addEventListener('click', function() {
+      saveCredentials();
+      const owner = (ghOwnerInput ? ghOwnerInput.value : '').trim();
+      const repo = (ghRepoInput ? ghRepoInput.value : '').trim();
+      const token = (ghTokenInput ? ghTokenInput.value : '').trim();
+
+      if (!token || !owner || !repo) {
+        if (adminStatus) adminStatus.textContent = 'ERROR: Username, Nama Repo, dan Token harus diisi!';
+        return;
+      }
+
+      if (adminStatus) adminStatus.textContent = 'Menyimpan ke GitHub... Mohon tunggu.';
+      sendMapMessage({
+        type: 'saveToGitHub',
+        owner: owner,
+        repo: repo,
+        token: token,
+        path: 'data/BidangTanah_5.js'
+      });
+    });
+  }
+
+  if (exportBackupBtn) {
+    exportBackupBtn.addEventListener('click', function() {
+      sendMapMessage({ type: 'exportGeoJSON' });
+    });
+  }
+
   window.addEventListener('message', function(event) {
     const data = event.data || {};
     if (data.type === 'nibSearchResult') {
@@ -323,6 +384,25 @@ button,input,select{font-family:inherit}
     } else if (data.type === 'basemapChanged') {
       streetBtn.classList.toggle('active', data.base === 'osm');
       satelliteBtn.classList.toggle('active', data.base === 'sat');
+    } else if (data.type === 'editorStatus') {
+      if (toggleEditBtn) {
+        if (data.active) {
+          toggleEditBtn.classList.add('primary');
+          toggleEditBtn.textContent = 'Matikan Editor';
+        } else {
+          toggleEditBtn.classList.remove('primary');
+          toggleEditBtn.textContent = 'Aktifkan Editor';
+        }
+      }
+      if (adminStatus) {
+        adminStatus.textContent = data.active 
+          ? 'Mode editor AKTIF. Gunakan toolbar di pojok kiri atas peta.' 
+          : 'Mode editor nonaktif.';
+      }
+    } else if (data.type === 'saveStatus') {
+      if (adminStatus) {
+        adminStatus.textContent = (data.success ? 'BERHASIL: ' : 'GAGAL: ') + data.message;
+      }
     }
   });
 })();
