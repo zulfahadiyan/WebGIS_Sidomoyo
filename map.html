@@ -417,6 +417,7 @@ body{
         <link rel="preconnect" href="https://fonts.googleapis.com">
         <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
         <link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@400;500;600;700;800&display=swap" rel="stylesheet">
+        <link rel="stylesheet" href="https://unpkg.com/@geoman-io/leaflet-geoman-free@latest/dist/leaflet-geoman.css">
     </head>
     <body>
         <div id="map">
@@ -438,6 +439,7 @@ body{
         <script src="js/tailDT.js"></script>
 <script src="js/nouislider.min.js"></script>
 <script src="js/wNumb.js"></script>
+        <script src="https://unpkg.com/@geoman-io/leaflet-geoman-free@latest/dist/leaflet-geoman.min.js"></script>
         <script src="data/TutupanLahan_0.js"></script>
         <script src="data/BatasDusun_1.js"></script>
         <script src="data/Sungai_2.js"></script>
@@ -1962,10 +1964,128 @@ body{
                 searchBidangByNIB(data.value);
             } else if (data.type === 'clearNibSearch') {
                 clearNibSearchResult();
+            } else if (data.type === 'toggleEdit') {
+                if (map.pm.globalEditEnabled()) {
+                    map.pm.removeControls();
+                    map.pm.disableGlobalEditMode();
+                } else {
+                    map.pm.addControls();
+                    map.pm.enableGlobalEditMode();
+                }
+            } else if (data.type === 'saveToGitHub') {
+                saveToGitHub(data.token, data.owner, data.repo, data.path);
+            } else if (data.type === 'exportGeoJSON') {
+                exportGeoJSONBackup();
             }
         });
 
         setTimeout(function(){ postToParent({type:'mapReady'}); }, 250);
+
+        
+        // Inisialisasi Geoman Editor
+        map.pm.addControls({
+          position: 'topleft',
+          drawMarker: false,
+          drawCircleMarker: false,
+          drawPolyline: false,
+          drawRectangle: false,
+          drawPolygon: true,
+          editMode: true,
+          dragMode: true,
+          cutPolygon: false,
+          removalMode: true
+        });
+        map.pm.removeControls();
+
+        map.on('pm:create', function(e) {
+          var layer = e.layer;
+          if (!layer.feature) {
+            layer.feature = {
+              type: 'Feature',
+              properties: {
+                NIB: '3404' + Math.floor(100000000 + Math.random() * 900000000),
+                NAMA: 'Pemilik Baru',
+                TIPE_HAK: 'Hak Milik',
+                LUAS_M2: 0,
+                DUSUN: 'BELURAN',
+                TAHUN: new Date().getFullYear(),
+                NOMOR: '',
+                KODE: ''
+              }
+            };
+          }
+          layer_BidangTanah_5.addLayer(layer);
+          if (typeof pop_BidangTanah_5 === 'function') {
+            pop_BidangTanah_5(layer.feature, layer);
+          }
+        });
+
+        function exportGeoJSONBackup() {
+          var data = layer_BidangTanah_5.toGeoJSON();
+          var content = "var json_BidangTanah_5 = " + JSON.stringify(data, null, 2) + ";\n";
+          var blob = new Blob([content], {type: "text/javascript;charset=utf-8"});
+          var url = URL.createObjectURL(blob);
+          var a = document.createElement('a');
+          a.href = url;
+          a.download = "BidangTanah_5.js";
+          document.body.appendChild(a);
+          a.click();
+          document.body.removeChild(a);
+          URL.revokeObjectURL(url);
+        }
+
+        async function saveToGitHub(githubToken, repoOwner, repoName, repoPath) {
+          if (!githubToken) {
+            postToParent({ type: 'saveStatus', success: false, message: 'Token GitHub belum diisi!' });
+            return;
+          }
+          try {
+            var geojsonData = layer_BidangTanah_5.toGeoJSON();
+            var fileContent = "";
+            if (repoPath.endsWith('.js')) {
+              fileContent = "var json_BidangTanah_5 = " + JSON.stringify(geojsonData, null, 2) + ";\n";
+            } else {
+              fileContent = JSON.stringify(geojsonData, null, 2);
+            }
+
+            var getUrl = `https://api.github.com/repos/${repoOwner}/${repoName}/contents/${repoPath}`;
+            var getRes = await fetch(getUrl, {
+              headers: { 'Authorization': `token ${githubToken}` }
+            });
+
+            if (!getRes.ok) {
+              throw new Error(`Gagal membaca file dari GitHub (${getRes.status} ${getRes.statusText}). Periksa Username (${repoOwner}), Nama Repo (${repoName}), dan Token.`);
+            }
+            var fileData = await getRes.json();
+            var currentSha = fileData.sha;
+
+            function utf8_to_b64(str) {
+              return window.btoa(unescape(encodeURIComponent(str)));
+            }
+
+            var putRes = await fetch(getUrl, {
+              method: 'PUT',
+              headers: {
+                'Authorization': `token ${githubToken}`,
+                'Content-Type': 'application/json'
+              },
+              body: JSON.stringify({
+                message: 'Update BidangTanah_5.js via WebGIS Editor',
+                content: utf8_to_b64(fileContent),
+                sha: currentSha
+              })
+            });
+
+            if (putRes.ok) {
+              postToParent({ type: 'saveStatus', success: true, message: 'Data berhasil disimpan & dicommit ke GitHub! Website publik akan terbarui dalam 1-2 menit.' });
+            } else {
+              var errData = await putRes.json();
+              throw new Error("Gagal menyimpan ke GitHub: " + (errData.message || putRes.statusText));
+            }
+          } catch(err) {
+            postToParent({ type: 'saveStatus', success: false, message: err.message });
+          }
+        }
 
         var Filters = {"OBJEK": "str","DUSUN": "str","TIPE_HAK": "str"};
         function filterFunc() {

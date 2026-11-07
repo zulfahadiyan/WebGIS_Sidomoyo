@@ -194,6 +194,40 @@ button,input,select{font-family:inherit}
         </ul>
       </section>
 
+      
+      <section class="panel">
+        <div class="panel-head">
+          <div>
+            <h3 class="panel-title">Panel Editor Admin</h3>
+            <p class="panel-subtitle">Edit bidang tanah & simpan langsung ke repository GitHub.</p>
+          </div>
+        </div>
+        <div class="search-wrap">
+          <label class="search-label" for="ghOwnerInput">Username GitHub</label>
+          <div class="search-field" style="padding-right:0;">
+            <input id="ghOwnerInput" type="text" placeholder="Contoh: username-anda" autocomplete="off">
+          </div>
+
+          <label class="search-label" for="ghRepoInput">Nama Repository</label>
+          <div class="search-field" style="padding-right:0;">
+            <input id="ghRepoInput" type="text" placeholder="Contoh: WebGIS_Sidomoyo" value="WebGIS_Sidomoyo" autocomplete="off">
+          </div>
+
+          <label class="search-label" for="ghTokenInput">GitHub Personal Access Token (PAT)</label>
+          <div class="search-field" style="padding-right:0;">
+            <input id="ghTokenInput" type="password" placeholder="ghp_xxxxxxxxxxxx..." autocomplete="off">
+          </div>
+
+          <div class="search-actions" style="margin-top:6px;">
+            <button class="ghost-btn" id="toggleEditBtn" type="button">Aktifkan Editor</button>
+            <button class="ghost-btn primary" id="saveGithubBtn" type="button">Simpan ke GitHub</button>
+            <button class="ghost-btn" id="exportBackupBtn" type="button">Unduh Backup Data</button>
+          </div>
+          <div class="search-note">Token & kredensial disimpan lokal di browser Anda (localStorage).</div>
+          <div class="search-status" id="adminStatus">Status Admin: Siap.</div>
+        </div>
+      </section>
+
       <div class="copyright">
         <strong>© 2026 Proyek Rekayasa Geodesi dan Geoinformatika, Teknik Geodesi Universitas Gadjah Mada</strong><br>
         WebGIS Kalurahan Sidomoyo · Kapanewon Godean · Kabupaten Sleman
