@@ -13,7 +13,7 @@
         <link rel="stylesheet" href="css/fontawesome-all.min.css">
         <link rel="stylesheet" href="css/leaflet-search.css">
         <link rel="stylesheet" href="css/filter.css">
-        <link rel="stylesheet" href="css/nouislider.min.css">
+<link rel="stylesheet" href="css/nouislider.min.css">
         <link rel="stylesheet" href="css/leaflet.photon.css">
         <link rel="stylesheet" href="css/leaflet-measure.css">
         <style>
@@ -417,7 +417,38 @@ body{
         <link rel="preconnect" href="https://fonts.googleapis.com">
         <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
         <link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@400;500;600;700;800&display=swap" rel="stylesheet">
-        <link rel="stylesheet" href="https://unpkg.com/@geoman-io/leaflet-geoman-free@latest/dist/leaflet-geoman.css">
+    <style>
+/* ===== Admin: edit data (disimpan ke GitHub) ===== */
+.wg-ctl{border:1px solid rgba(219,231,223,.98)!important;border-radius:14px!important;overflow:hidden;box-shadow:var(--shadow)!important}
+.wg-ctl a.fas{font:900 14px/30px "Font Awesome 5 Free","Font Awesome 6 Free"!important;color:var(--brand)!important;background:#fff!important;text-align:center}
+.wg-dim path{pointer-events:none!important}
+#wgAdmin{display:none;position:absolute;left:58px;top:72px;width:min(340px,calc(100% - 76px));max-height:calc(100% - 96px);z-index:1105;flex-direction:column;border:1px solid rgba(219,231,223,.98);border-radius:18px;background:rgba(255,255,255,.97);backdrop-filter:blur(14px);box-shadow:var(--shadow);font:13px/1.5 "Plus Jakarta Sans",Inter,"Segoe UI",Arial,sans-serif;color:#18332b;overflow:hidden}
+#wgAdmin.open{display:flex}
+#wgAdmin .wg-head{display:flex;justify-content:space-between;align-items:flex-start;gap:8px;padding:14px 14px 10px;border-bottom:1px solid #eef3ef}
+#wgAdmin .wg-head strong{display:block;font-size:15px;color:#18352d}
+#wgAdmin .wg-head small{color:var(--muted);font-size:11px}
+#wgAdmin .wg-x{border:0;background:none;font-size:22px;line-height:1;color:var(--brand);cursor:pointer;padding:0 4px}
+#wgAdmin .wg-body{padding:12px 14px 14px;overflow-y:auto;display:grid;gap:10px;align-content:start}
+#wgAdmin .wg-note{margin:0;color:var(--muted);font-size:12px}
+#wgAdmin .wg-f{display:grid;gap:4px}
+#wgAdmin .wg-f>span{font-size:11px;font-weight:700;color:#5e7067}
+#wgAdmin input[type=text],#wgAdmin input[type=password],#wgAdmin select{width:100%;min-height:38px;padding:7px 10px;border:1px solid #d8e5dc;border-radius:12px;background:#fcfefd;color:#20352d;font:inherit;outline:none}
+#wgAdmin input:focus,#wgAdmin select:focus{border-color:#91b5a5;box-shadow:0 0 0 4px rgba(145,181,165,.16)}
+#wgAdmin input:disabled{background:#f1f5f2;color:#7a8a82}
+#wgAdmin .wg-sw{display:flex;gap:8px;align-items:center;font-weight:700;cursor:pointer}
+#wgAdmin details{border:1px solid #e3ece6;border-radius:12px;padding:8px 10px;display:grid;gap:8px}
+#wgAdmin summary{cursor:pointer;font-weight:700;color:var(--brand-2)}
+#wgAdmin .wg-form{display:grid;gap:8px;padding:10px;border:1px solid #cfe0d6;border-radius:14px;background:#f8fbf9}
+#wgAdmin .wg-form h4{margin:0;font-size:13px;color:var(--brand)}
+#wgAdmin .wg-row{display:flex;gap:8px;flex-wrap:wrap}
+#wgAdmin .wg-pend{display:grid;gap:8px;padding-top:10px;border-top:1px solid #eef3ef}
+#wgAdmin .wg-msg:empty{display:none}
+#wgAdmin .wg-msg{padding:8px 10px;border-radius:12px;font-size:12px;background:#eff7f2;color:#1d5f53;word-break:break-word}
+#wgAdmin .wg-msg.err{background:#fdecea;color:#a12622}
+#wgAdmin .wg-msg.info{background:#f1f5f2;color:#5e7067}
+#wgAdmin .menu-btn:disabled{opacity:.45;cursor:not-allowed}
+@media (max-width:760px){#wgAdmin{left:12px;right:12px;top:auto;bottom:12px;width:auto;max-height:62%}}
+</style>
     </head>
     <body>
         <div id="map">
@@ -437,9 +468,8 @@ body{
         <script src="js/leaflet-measure.js"></script>
         <script src="js/leaflet-search.js"></script>
         <script src="js/tailDT.js"></script>
-        <script src="js/nouislider.min.js"></script>
-        <script src="js/wNumb.js"></script>
-        <script src="https://unpkg.com/@geoman-io/leaflet-geoman-free@latest/dist/leaflet-geoman.min.js"></script>
+<script src="js/nouislider.min.js"></script>
+<script src="js/wNumb.js"></script>
         <script src="data/TutupanLahan_0.js"></script>
         <script src="data/BatasDusun_1.js"></script>
         <script src="data/Sungai_2.js"></script>
@@ -470,6 +500,7 @@ body{
         var hash = new L.Hash(map);
         map.attributionControl.setPrefix('<a href="https://github.com/qgis2web/qgis2web" target="_blank">qgis2web</a> &middot; <a href="https://leafletjs.com" title="A JS library for interactive maps">Leaflet</a> &middot; <a href="https://qgis.org">QGIS</a>');
         var autolinker = new Autolinker({truncate: {length: 30, location: 'smart'}});
+        // remove popup's row if "visible-with-data"
         function removeEmptyRowsFromPopupContent(content, feature) {
          var tempDiv = document.createElement('div');
          tempDiv.innerHTML = content;
@@ -483,6 +514,7 @@ body{
          }
          return tempDiv.innerHTML;
         }
+        // modify popup if contains media
         function addClassToPopupIfMedia(content, popup) {
             var tempDiv = document.createElement('div');
             tempDiv.innerHTML = content;
@@ -493,11 +525,16 @@ body{
                     popup._contentNode.classList.add('media');
                     var img = popup._contentNode.querySelector('td img');
                     if (img) {
+                        // If already loaded (cache), update immediately
                         if (img.complete && img.naturalHeight > 0) {
                             popup.update();
                         } else {
-                            img.addEventListener('load', function() { popup.update(); });
-                            img.addEventListener('error', function() { popup.update(); });
+                            img.addEventListener('load', function() {
+                                popup.update();
+                            });
+                            img.addEventListener('error', function() {
+                                popup.update();
+                            });
                         }
                     }
                 } else if (/\.(mp3|wav|ogg|aac)$/i.test(src)) {
@@ -520,7 +557,10 @@ body{
                     video.style.maxWidth = "60vw";
                     imgTd.parentNode.replaceChild(video, imgTd);
                     popup._contentNode.classList.add('media');
-                    video.addEventListener('loadedmetadata', function() { popup.update(); });
+                    // Aggiorna il popup quando il video carica i metadati
+                    video.addEventListener('loadedmetadata', function() {
+                        popup.update();
+                    });
                     setTimeout(function() {
                         popup.setContent(tempDiv.innerHTML);
                         popup.update();
@@ -532,7 +572,9 @@ body{
                 popup._contentNode.classList.remove('media');
             }
         }
-        var zoomControl = L.control.zoom({ position: 'topleft' }).addTo(map);
+        var zoomControl = L.control.zoom({
+            position: 'topleft'
+        }).addTo(map);
         L.control.locate({locateOptions: {maxZoom: 19}}).addTo(map);
         var measureControl = new L.Control.Measure({
             position: 'topleft',
@@ -554,8 +596,8 @@ body{
         };
         northArrow.addTo(map);
         var bounds_group = new L.featureGroup([]);
-        function setBounds() {}
-
+        function setBounds() {
+        }
         function pop_TutupanLahan_0(feature, layer) {
             layer.on({
                 mouseout: function(e) {
@@ -567,255 +609,1142 @@ body{
                     if (typeof layer.closePopup == 'function') {
                         layer.closePopup();
                     } else {
-                        layer.eachLayer(function(feature){ feature.closePopup() });
+                        layer.eachLayer(function(feature){
+                            feature.closePopup()
+                        });
                     }
                 },
                 mouseover: highlightFeature,
             });
-            var popupContent = '<table>                    <tr><th scope="row">LUAS_M2</th><td>' + (feature.properties['LUAS_M2'] !== null ? autolinker.link(String(feature.properties['LUAS_M2']).replace(/'/g, ''').toLocaleString()) : '') + '</td></tr>                    <tr><th scope="row">SUMBER</th><td>' + (feature.properties['SUMBER'] !== null ? autolinker.link(String(feature.properties['SUMBER']).replace(/'/g, ''').toLocaleString()) : '') + '</td></tr>                    <tr><td colspan="2"><strong>OBJEK</strong><br />' + (feature.properties['OBJEK'] !== null ? autolinker.link(String(feature.properties['OBJEK']).replace(/'/g, ''').toLocaleString()) : '') + '</td></tr>                    <tr><th scope="row">KELURAHAN</th><td>' + (feature.properties['KELURAHAN'] !== null ? autolinker.link(String(feature.properties['KELURAHAN']).replace(/'/g, ''').toLocaleString()) : '') + '</td></tr>                </table>';
+            var popupContent = '<table>\
+                    <tr>\
+                        <th scope="row">LUAS_M2</th>\
+                        <td>' + (feature.properties['LUAS_M2'] !== null ? autolinker.link(String(feature.properties['LUAS_M2']).replace(/'/g, '\'').toLocaleString()) : '') + '</td>\
+                    </tr>\
+                    <tr>\
+                        <th scope="row">SUMBER</th>\
+                        <td>' + (feature.properties['SUMBER'] !== null ? autolinker.link(String(feature.properties['SUMBER']).replace(/'/g, '\'').toLocaleString()) : '') + '</td>\
+                    </tr>\
+                    <tr>\
+                        <td colspan="2"><strong>OBJEK</strong><br />' + (feature.properties['OBJEK'] !== null ? autolinker.link(String(feature.properties['OBJEK']).replace(/'/g, '\'').toLocaleString()) : '') + '</td>\
+                    </tr>\
+                    <tr>\
+                        <th scope="row">KELURAHAN</th>\
+                        <td>' + (feature.properties['KELURAHAN'] !== null ? autolinker.link(String(feature.properties['KELURAHAN']).replace(/'/g, '\'').toLocaleString()) : '') + '</td>\
+                    </tr>\
+                </table>';
             var content = removeEmptyRowsFromPopupContent(popupContent, feature);
-			layer.on('popupopen', function(e) { addClassToPopupIfMedia(content, e.popup); });
+			layer.on('popupopen', function(e) {
+				addClassToPopupIfMedia(content, e.popup);
+			});
 			layer.bindPopup(content, { maxHeight: 400 });
         }
 
-        var pattern_TutupanLahan_0_0 = new L.StripePattern({ weight: 0.3, spaceWeight: 8.0, color: '#16c6d4', opacity: 1.0, spaceOpacity: 0, angle: 405 });
+        var pattern_TutupanLahan_0_0 = new L.StripePattern({
+            weight: 0.3,
+            spaceWeight: 8.0,
+            color: '#16c6d4',
+            opacity: 1.0,
+            spaceOpacity: 0,
+            angle: 405
+        });
         pattern_TutupanLahan_0_0.addTo(map);
-
         function style_TutupanLahan_0_0(feature) {
             switch(String(feature.properties['OBJEK'])) {
-                case 'Gedung': return { pane: 'pane_TutupanLahan_0', opacity: 1, color: 'rgba(35,35,35,1.0)', dashArray: '', lineCap: 'butt', lineJoin: 'miter', weight: 1.0, fill: true, fillOpacity: 1, fillColor: 'rgba(181,181,181,1.0)', interactive: true };
-                case 'Kebun/Perkebunan': return { pane: 'pane_TutupanLahan_0', opacity: 1, color: 'rgba(35,35,35,1.0)', dashArray: '', lineCap: 'butt', lineJoin: 'miter', weight: 1.0, fill: true, fillOpacity: 1, fillColor: 'rgba(216,255,201,1.0)', interactive: true };
-                case 'Permukiman': return { pane: 'pane_TutupanLahan_0', opacity: 1, color: 'rgba(35,35,35,1.0)', dashArray: '', lineCap: 'butt', lineJoin: 'miter', weight: 1.0, fill: true, fillOpacity: 1, fillColor: 'rgba(249,189,139,1.0)', interactive: true };
-                case 'Sawah irigasi': return { pane: 'pane_TutupanLahan_0', stroke: false, fillOpacity: 1, fillPattern: pattern_TutupanLahan_0_0, interactive: true };
+                case 'Gedung':
+                    return {
+                pane: 'pane_TutupanLahan_0',
+                opacity: 1,
+                color: 'rgba(35,35,35,1.0)',
+                dashArray: '',
+                lineCap: 'butt',
+                lineJoin: 'miter',
+                weight: 1.0, 
+                fill: true,
+                fillOpacity: 1,
+                fillColor: 'rgba(181,181,181,1.0)',
+                interactive: true,
+            }
+                    break;
+                case 'Kebun/Perkebunan':
+                    return {
+                pane: 'pane_TutupanLahan_0',
+                opacity: 1,
+                color: 'rgba(35,35,35,1.0)',
+                dashArray: '',
+                lineCap: 'butt',
+                lineJoin: 'miter',
+                weight: 1.0, 
+                fill: true,
+                fillOpacity: 1,
+                fillColor: 'rgba(216,255,201,1.0)',
+                interactive: true,
+            }
+                    break;
+                case 'Permukiman':
+                    return {
+                pane: 'pane_TutupanLahan_0',
+                opacity: 1,
+                color: 'rgba(35,35,35,1.0)',
+                dashArray: '',
+                lineCap: 'butt',
+                lineJoin: 'miter',
+                weight: 1.0, 
+                fill: true,
+                fillOpacity: 1,
+                fillColor: 'rgba(249,189,139,1.0)',
+                interactive: true,
+            }
+                    break;
+                case 'Sawah irigasi':
+                    return {
+                pane: 'pane_TutupanLahan_0',
+                stroke: false,
+                fillOpacity: 1,
+                fillPattern: pattern_TutupanLahan_0_0,
+                interactive: true,
+            }
+                    break;
             }
         }
         map.createPane('pane_TutupanLahan_0');
         map.getPane('pane_TutupanLahan_0').style.zIndex = 400;
         map.getPane('pane_TutupanLahan_0').style['mix-blend-mode'] = 'normal';
         var layer_TutupanLahan_0 = new L.geoJson(json_TutupanLahan_0, {
-            attribution: '', interactive: true, dataVar: 'json_TutupanLahan_0', layerName: 'layer_TutupanLahan_0', pane: 'pane_TutupanLahan_0', onEachFeature: pop_TutupanLahan_0, style: style_TutupanLahan_0_0,
+            attribution: '',
+            interactive: true,
+            dataVar: 'json_TutupanLahan_0',
+            layerName: 'layer_TutupanLahan_0',
+            pane: 'pane_TutupanLahan_0',
+            onEachFeature: pop_TutupanLahan_0,
+            style: style_TutupanLahan_0_0,
         });
         bounds_group.addLayer(layer_TutupanLahan_0);
-
+        // map.addLayer(layer_TutupanLahan_0);  // Available from the layer control; off initially for a clearer orthophoto view.
         function pop_BatasDusun_1(feature, layer) {
             layer.on({
                 mouseout: function(e) {
                     for (var i in e.target._eventParents) {
-                        if (typeof e.target._eventParents[i].resetStyle === 'function') e.target._eventParents[i].resetStyle(e.target);
+                        if (typeof e.target._eventParents[i].resetStyle === 'function') {
+                            e.target._eventParents[i].resetStyle(e.target);
+                        }
                     }
-                    if (typeof layer.closePopup == 'function') layer.closePopup(); else layer.eachLayer(function(feature){ feature.closePopup() });
+                    if (typeof layer.closePopup == 'function') {
+                        layer.closePopup();
+                    } else {
+                        layer.eachLayer(function(feature){
+                            feature.closePopup()
+                        });
+                    }
                 },
                 mouseover: highlightFeature,
             });
-            var popupContent = '<table><tr><td colspan="2"><strong>DUSUN</strong><br />' + (feature.properties['DUSUN'] !== null ? autolinker.link(String(feature.properties['DUSUN']).replace(/'/g, ''').toLocaleString()) : '') + '</td></tr></table>';
+            var popupContent = '<table>\
+                    <tr>\
+                        <td colspan="2"><strong>DUSUN</strong><br />' + (feature.properties['DUSUN'] !== null ? autolinker.link(String(feature.properties['DUSUN']).replace(/'/g, '\'').toLocaleString()) : '') + '</td>\
+                    </tr>\
+                </table>';
             var content = removeEmptyRowsFromPopupContent(popupContent, feature);
-			layer.on('popupopen', function(e) { addClassToPopupIfMedia(content, e.popup); });
+			layer.on('popupopen', function(e) {
+				addClassToPopupIfMedia(content, e.popup);
+			});
 			layer.bindPopup(content, { maxHeight: 400 });
         }
 
         function style_BatasDusun_1_0() {
-            return { pane: 'pane_BatasDusun_1', opacity: 1, color: 'rgba(35,35,35,1.0)', dashArray: '20.0,4.0,8.0,4.0', lineCap: 'butt', lineJoin: 'miter', weight: 4.0, fill: true, fillOpacity: 1, fillColor: 'rgba(255,255,191,0.0)', interactive: true }
+            return {
+                pane: 'pane_BatasDusun_1',
+                opacity: 1,
+                color: 'rgba(35,35,35,1.0)',
+                dashArray: '20.0,4.0,8.0,4.0',
+                lineCap: 'butt',
+                lineJoin: 'miter',
+                weight: 4.0, 
+                fill: true,
+                fillOpacity: 1,
+                fillColor: 'rgba(255,255,191,0.0)',
+                interactive: true,
+            }
         }
         map.createPane('pane_BatasDusun_1');
         map.getPane('pane_BatasDusun_1').style.zIndex = 401;
         map.getPane('pane_BatasDusun_1').style['mix-blend-mode'] = 'normal';
         var layer_BatasDusun_1 = new L.geoJson(json_BatasDusun_1, {
-            attribution: '', interactive: true, dataVar: 'json_BatasDusun_1', layerName: 'layer_BatasDusun_1', pane: 'pane_BatasDusun_1', onEachFeature: pop_BatasDusun_1, style: style_BatasDusun_1_0,
+            attribution: '',
+            interactive: true,
+            dataVar: 'json_BatasDusun_1',
+            layerName: 'layer_BatasDusun_1',
+            pane: 'pane_BatasDusun_1',
+            onEachFeature: pop_BatasDusun_1,
+            style: style_BatasDusun_1_0,
         });
         bounds_group.addLayer(layer_BatasDusun_1);
         map.addLayer(layer_BatasDusun_1);
-
         function pop_Sungai_2(feature, layer) {
             layer.on({
                 mouseout: function(e) {
                     for (var i in e.target._eventParents) {
-                        if (typeof e.target._eventParents[i].resetStyle === 'function') e.target._eventParents[i].resetStyle(e.target);
+                        if (typeof e.target._eventParents[i].resetStyle === 'function') {
+                            e.target._eventParents[i].resetStyle(e.target);
+                        }
                     }
-                    if (typeof layer.closePopup == 'function') layer.closePopup(); else layer.eachLayer(function(feature){ feature.closePopup() });
+                    if (typeof layer.closePopup == 'function') {
+                        layer.closePopup();
+                    } else {
+                        layer.eachLayer(function(feature){
+                            feature.closePopup()
+                        });
+                    }
                 },
                 mouseover: highlightFeature,
             });
-            var popupContent = '<table>                    <tr><td colspan="2"><strong>NAMOBJ</strong><br />' + (feature.properties['NAMOBJ'] !== null ? autolinker.link(String(feature.properties['NAMOBJ']).replace(/'/g, ''').toLocaleString()) : '') + '</td></tr>                    <tr><th scope="row">REMARK</th><td>' + (feature.properties['REMARK'] !== null ? autolinker.link(String(feature.properties['REMARK']).replace(/'/g, ''').toLocaleString()) : '') + '</td></tr>                    <tr><th scope="row">LCODE</th><td>' + (feature.properties['LCODE'] !== null ? autolinker.link(String(feature.properties['LCODE']).replace(/'/g, ''').toLocaleString()) : '') + '</td></tr>                </table>';
+            var popupContent = '<table>\
+                    <tr>\
+                        <td colspan="2"><strong>NAMOBJ</strong><br />' + (feature.properties['NAMOBJ'] !== null ? autolinker.link(String(feature.properties['NAMOBJ']).replace(/'/g, '\'').toLocaleString()) : '') + '</td>\
+                    </tr>\
+                    <tr>\
+                        <th scope="row">REMARK</th>\
+                        <td>' + (feature.properties['REMARK'] !== null ? autolinker.link(String(feature.properties['REMARK']).replace(/'/g, '\'').toLocaleString()) : '') + '</td>\
+                    </tr>\
+                    <tr>\
+                        <th scope="row">LCODE</th>\
+                        <td>' + (feature.properties['LCODE'] !== null ? autolinker.link(String(feature.properties['LCODE']).replace(/'/g, '\'').toLocaleString()) : '') + '</td>\
+                    </tr>\
+                </table>';
             var content = removeEmptyRowsFromPopupContent(popupContent, feature);
-			layer.on('popupopen', function(e) { addClassToPopupIfMedia(content, e.popup); });
+			layer.on('popupopen', function(e) {
+				addClassToPopupIfMedia(content, e.popup);
+			});
 			layer.bindPopup(content, { maxHeight: 400 });
         }
 
         function style_Sungai_2_0() {
-            return { pane: 'pane_Sungai_2', opacity: 1, color: 'rgba(216,255,215,1.0)', dashArray: '', lineCap: 'square', lineJoin: 'bevel', weight: 5.0, fillOpacity: 0, interactive: true }
+            return {
+                pane: 'pane_Sungai_2',
+                opacity: 1,
+                color: 'rgba(216,255,215,1.0)',
+                dashArray: '',
+                lineCap: 'square',
+                lineJoin: 'bevel',
+                weight: 5.0,
+                fillOpacity: 0,
+                interactive: true,
+            }
         }
         map.createPane('pane_Sungai_2');
         map.getPane('pane_Sungai_2').style.zIndex = 402;
         map.getPane('pane_Sungai_2').style['mix-blend-mode'] = 'normal';
         var layer_Sungai_2 = new L.geoJson(json_Sungai_2, {
-            attribution: '', interactive: true, dataVar: 'json_Sungai_2', layerName: 'layer_Sungai_2', pane: 'pane_Sungai_2', onEachFeature: pop_Sungai_2, style: style_Sungai_2_0,
+            attribution: '',
+            interactive: true,
+            dataVar: 'json_Sungai_2',
+            layerName: 'layer_Sungai_2',
+            pane: 'pane_Sungai_2',
+            onEachFeature: pop_Sungai_2,
+            style: style_Sungai_2_0,
         });
         bounds_group.addLayer(layer_Sungai_2);
         map.addLayer(layer_Sungai_2);
-
         function pop_Jalan_3(feature, layer) {
             layer.on({
                 mouseout: function(e) {
                     for (var i in e.target._eventParents) {
-                        if (typeof e.target._eventParents[i].resetStyle === 'function') e.target._eventParents[i].resetStyle(e.target);
+                        if (typeof e.target._eventParents[i].resetStyle === 'function') {
+                            e.target._eventParents[i].resetStyle(e.target);
+                        }
                     }
-                    if (typeof layer.closePopup == 'function') layer.closePopup(); else layer.eachLayer(function(feature){ feature.closePopup() });
+                    if (typeof layer.closePopup == 'function') {
+                        layer.closePopup();
+                    } else {
+                        layer.eachLayer(function(feature){
+                            feature.closePopup()
+                        });
+                    }
                 },
                 mouseover: highlightFeature,
             });
-            var popupContent = '<table>                    <tr><th scope="row">fid</th><td>' + (feature.properties['fid'] !== null ? autolinker.link(String(feature.properties['fid']).replace(/'/g, ''').toLocaleString()) : '') + '</td></tr>                    <tr><td colspan="2"><strong>TIPE_JALAN</strong><br />' + (feature.properties['TIPE_JALAN'] !== null ? autolinker.link(String(feature.properties['TIPE_JALAN']).replace(/'/g, ''').toLocaleString()) : '') + '</td></tr>                </table>';
+            var popupContent = '<table>\
+                    <tr>\
+                        <th scope="row">fid</th>\
+                        <td>' + (feature.properties['fid'] !== null ? autolinker.link(String(feature.properties['fid']).replace(/'/g, '\'').toLocaleString()) : '') + '</td>\
+                    </tr>\
+                    <tr>\
+                        <td colspan="2"><strong>TIPE_JALAN</strong><br />' + (feature.properties['TIPE_JALAN'] !== null ? autolinker.link(String(feature.properties['TIPE_JALAN']).replace(/'/g, '\'').toLocaleString()) : '') + '</td>\
+                    </tr>\
+                </table>';
             var content = removeEmptyRowsFromPopupContent(popupContent, feature);
-			layer.on('popupopen', function(e) { addClassToPopupIfMedia(content, e.popup); });
+			layer.on('popupopen', function(e) {
+				addClassToPopupIfMedia(content, e.popup);
+			});
 			layer.bindPopup(content, { maxHeight: 400 });
         }
 
         function style_Jalan_3_0(feature) {
             switch(String(feature.properties['TIPE_JALAN'])) {
-                case 'Jalan Kolektor': return { pane: 'pane_Jalan_3', opacity: 1, color: 'rgba(255,178,255,1.0)', dashArray: '', lineCap: 'square', lineJoin: 'bevel', weight: 7.0, fillOpacity: 0, interactive: true };
-                case 'Jalan Lain': return { pane: 'pane_Jalan_3', opacity: 1, color: 'rgba(210,189,134,1.0)', dashArray: '', lineCap: 'square', lineJoin: 'bevel', weight: 4.0, fillOpacity: 0, interactive: true };
-                case 'Jalan Lokal': return { pane: 'pane_Jalan_3', opacity: 1, color: 'rgba(127,103,78,1.0)', dashArray: '', lineCap: 'square', lineJoin: 'bevel', weight: 5.0, fillOpacity: 0, interactive: true };
-                case 'Jalan Setapak': return { pane: 'pane_Jalan_3', opacity: 1, color: 'rgba(250,204,224,1.0)', dashArray: '', lineCap: 'round', lineJoin: 'round', weight: 4.0, fillOpacity: 0, interactive: true };
+                case 'Jalan Kolektor':
+                    return {
+                pane: 'pane_Jalan_3',
+                opacity: 1,
+                color: 'rgba(255,178,255,1.0)',
+                dashArray: '',
+                lineCap: 'square',
+                lineJoin: 'bevel',
+                weight: 7.0,
+                fillOpacity: 0,
+                interactive: true,
+            }
+                    break;
+                case 'Jalan Lain':
+                    return {
+                pane: 'pane_Jalan_3',
+                opacity: 1,
+                color: 'rgba(210,189,134,1.0)',
+                dashArray: '',
+                lineCap: 'square',
+                lineJoin: 'bevel',
+                weight: 4.0,
+                fillOpacity: 0,
+                interactive: true,
+            }
+                    break;
+                case 'Jalan Lokal':
+                    return {
+                pane: 'pane_Jalan_3',
+                opacity: 1,
+                color: 'rgba(127,103,78,1.0)',
+                dashArray: '',
+                lineCap: 'square',
+                lineJoin: 'bevel',
+                weight: 5.0,
+                fillOpacity: 0,
+                interactive: true,
+            }
+                    break;
+                case 'Jalan Setapak':
+                    return {
+                pane: 'pane_Jalan_3',
+                opacity: 1,
+                color: 'rgba(250,204,224,1.0)',
+                dashArray: '',
+                lineCap: 'round',
+                lineJoin: 'round',
+                weight: 4.0,
+                fillOpacity: 0,
+                interactive: true,
+            }
+                    break;
             }
         }
         map.createPane('pane_Jalan_3');
         map.getPane('pane_Jalan_3').style.zIndex = 403;
         map.getPane('pane_Jalan_3').style['mix-blend-mode'] = 'normal';
         var layer_Jalan_3 = new L.geoJson(json_Jalan_3, {
-            attribution: '', interactive: true, dataVar: 'json_Jalan_3', layerName: 'layer_Jalan_3', pane: 'pane_Jalan_3', onEachFeature: pop_Jalan_3, style: style_Jalan_3_0,
+            attribution: '',
+            interactive: true,
+            dataVar: 'json_Jalan_3',
+            layerName: 'layer_Jalan_3',
+            pane: 'pane_Jalan_3',
+            onEachFeature: pop_Jalan_3,
+            style: style_Jalan_3_0,
         });
         bounds_group.addLayer(layer_Jalan_3);
         map.addLayer(layer_Jalan_3);
-
         function pop_PenggunaanLahan_4(feature, layer) {
             layer.on({
                 mouseout: function(e) {
                     for (var i in e.target._eventParents) {
-                        if (typeof e.target._eventParents[i].resetStyle === 'function') e.target._eventParents[i].resetStyle(e.target);
+                        if (typeof e.target._eventParents[i].resetStyle === 'function') {
+                            e.target._eventParents[i].resetStyle(e.target);
+                        }
                     }
-                    if (typeof layer.closePopup == 'function') layer.closePopup(); else layer.eachLayer(function(feature){ feature.closePopup() });
+                    if (typeof layer.closePopup == 'function') {
+                        layer.closePopup();
+                    } else {
+                        layer.eachLayer(function(feature){
+                            feature.closePopup()
+                        });
+                    }
                 },
                 mouseover: highlightFeature,
             });
-            var popupContent = '<table>                    <tr><td colspan="2"><strong>OBJEK</strong><br />' + (feature.properties['OBJEK'] !== null ? autolinker.link(String(feature.properties['OBJEK']).replace(/'/g, ''').toLocaleString()) : '') + '</td></tr>                    <tr><th scope="row">KATEGORI</th><td>' + (feature.properties['KATEGORI'] !== null ? autolinker.link(String(feature.properties['KATEGORI']).replace(/'/g, ''').toLocaleString()) : '') + '</td></tr>                </table>';
+            var popupContent = '<table>\
+                    <tr>\
+                        <td colspan="2"><strong>OBJEK</strong><br />' + (feature.properties['OBJEK'] !== null ? autolinker.link(String(feature.properties['OBJEK']).replace(/'/g, '\'').toLocaleString()) : '') + '</td>\
+                    </tr>\
+                    <tr>\
+                        <th scope="row">KATEGORI</th>\
+                        <td>' + (feature.properties['KATEGORI'] !== null ? autolinker.link(String(feature.properties['KATEGORI']).replace(/'/g, '\'').toLocaleString()) : '') + '</td>\
+                    </tr>\
+                </table>';
             var content = removeEmptyRowsFromPopupContent(popupContent, feature);
-			layer.on('popupopen', function(e) { addClassToPopupIfMedia(content, e.popup); });
+			layer.on('popupopen', function(e) {
+				addClassToPopupIfMedia(content, e.popup);
+			});
 			layer.bindPopup(content, { maxHeight: 400 });
         }
 
         function style_PenggunaanLahan_4_0(feature) {
             switch(String(feature.properties['KATEGORI'])) {
-                case 'Industri dan Pergudangan': return { pane: 'pane_PenggunaanLahan_4', opacity: 1, color: 'rgba(35,35,35,1.0)', dashArray: '', lineCap: 'butt', lineJoin: 'miter', weight: 1.0, fill: true, fillOpacity: 1, fillColor: 'rgba(255,175,132,1.0)', interactive: true };
-                case 'Kesehatan': return { pane: 'pane_PenggunaanLahan_4', opacity: 1, color: 'rgba(35,35,35,1.0)', dashArray: '', lineCap: 'butt', lineJoin: 'miter', weight: 1.0, fill: true, fillOpacity: 1, fillColor: 'rgba(252,181,191,1.0)', interactive: true };
-                case 'Olahraga': return { pane: 'pane_PenggunaanLahan_4', opacity: 1, color: 'rgba(35,35,35,1.0)', dashArray: '', lineCap: 'butt', lineJoin: 'miter', weight: 1.0, fill: true, fillOpacity: 1, fillColor: 'rgba(237,204,124,1.0)', interactive: true };
-                case 'Pemakaman Umum': return { pane: 'pane_PenggunaanLahan_4', opacity: 1, color: 'rgba(35,35,35,1.0)', dashArray: '', lineCap: 'butt', lineJoin: 'miter', weight: 1.0, fill: true, fillOpacity: 1, fillColor: 'rgba(142,142,142,1.0)', interactive: true };
-                case 'Pendidikan': return { pane: 'pane_PenggunaanLahan_4', opacity: 1, color: 'rgba(35,35,35,1.0)', dashArray: '', lineCap: 'butt', lineJoin: 'miter', weight: 1.0, fill: true, fillOpacity: 1, fillColor: 'rgba(221,204,160,1.0)', interactive: true };
-                case 'Perdagangan dan Jasa': return { pane: 'pane_PenggunaanLahan_4', opacity: 1, color: 'rgba(35,35,35,1.0)', dashArray: '', lineCap: 'butt', lineJoin: 'miter', weight: 1.0, fill: true, fillOpacity: 1, fillColor: 'rgba(255,201,214,1.0)', interactive: true };
-                case 'Peribadatan': return { pane: 'pane_PenggunaanLahan_4', opacity: 1, color: 'rgba(35,35,35,1.0)', dashArray: '', lineCap: 'butt', lineJoin: 'miter', weight: 1.0, fill: true, fillOpacity: 1, fillColor: 'rgba(165,160,186,1.0)', interactive: true };
-                case 'Perkantoran': return { pane: 'pane_PenggunaanLahan_4', opacity: 1, color: 'rgba(35,35,35,1.0)', dashArray: '', lineCap: 'butt', lineJoin: 'miter', weight: 1.0, fill: true, fillOpacity: 1, fillColor: 'rgba(198,153,122,1.0)', interactive: true };
-                case 'Perkebunan': return { pane: 'pane_PenggunaanLahan_4', opacity: 1, color: 'rgba(35,35,35,1.0)', dashArray: '', lineCap: 'butt', lineJoin: 'miter', weight: 1.0, fill: true, fillOpacity: 1, fillColor: 'rgba(216,255,201,1.0)', interactive: true };
-                case 'Permukiman': return { pane: 'pane_PenggunaanLahan_4', opacity: 1, color: 'rgba(35,35,35,1.0)', dashArray: '', lineCap: 'butt', lineJoin: 'miter', weight: 1.0, fill: true, fillOpacity: 1, fillColor: 'rgba(249,189,139,1.0)', interactive: true };
+                case 'Industri dan Pergudangan':
+                    return {
+                pane: 'pane_PenggunaanLahan_4',
+                opacity: 1,
+                color: 'rgba(35,35,35,1.0)',
+                dashArray: '',
+                lineCap: 'butt',
+                lineJoin: 'miter',
+                weight: 1.0, 
+                fill: true,
+                fillOpacity: 1,
+                fillColor: 'rgba(255,175,132,1.0)',
+                interactive: true,
+            }
+                    break;
+                case 'Kesehatan':
+                    return {
+                pane: 'pane_PenggunaanLahan_4',
+                opacity: 1,
+                color: 'rgba(35,35,35,1.0)',
+                dashArray: '',
+                lineCap: 'butt',
+                lineJoin: 'miter',
+                weight: 1.0, 
+                fill: true,
+                fillOpacity: 1,
+                fillColor: 'rgba(252,181,191,1.0)',
+                interactive: true,
+            }
+                    break;
+                case 'Olahraga':
+                    return {
+                pane: 'pane_PenggunaanLahan_4',
+                opacity: 1,
+                color: 'rgba(35,35,35,1.0)',
+                dashArray: '',
+                lineCap: 'butt',
+                lineJoin: 'miter',
+                weight: 1.0, 
+                fill: true,
+                fillOpacity: 1,
+                fillColor: 'rgba(237,204,124,1.0)',
+                interactive: true,
+            }
+                    break;
+                case 'Pemakaman Umum':
+                    return {
+                pane: 'pane_PenggunaanLahan_4',
+                opacity: 1,
+                color: 'rgba(35,35,35,1.0)',
+                dashArray: '',
+                lineCap: 'butt',
+                lineJoin: 'miter',
+                weight: 1.0, 
+                fill: true,
+                fillOpacity: 1,
+                fillColor: 'rgba(142,142,142,1.0)',
+                interactive: true,
+            }
+                    break;
+                case 'Pendidikan':
+                    return {
+                pane: 'pane_PenggunaanLahan_4',
+                opacity: 1,
+                color: 'rgba(35,35,35,1.0)',
+                dashArray: '',
+                lineCap: 'butt',
+                lineJoin: 'miter',
+                weight: 1.0, 
+                fill: true,
+                fillOpacity: 1,
+                fillColor: 'rgba(221,204,160,1.0)',
+                interactive: true,
+            }
+                    break;
+                case 'Perdagangan dan Jasa':
+                    return {
+                pane: 'pane_PenggunaanLahan_4',
+                opacity: 1,
+                color: 'rgba(35,35,35,1.0)',
+                dashArray: '',
+                lineCap: 'butt',
+                lineJoin: 'miter',
+                weight: 1.0, 
+                fill: true,
+                fillOpacity: 1,
+                fillColor: 'rgba(255,201,214,1.0)',
+                interactive: true,
+            }
+                    break;
+                case 'Peribadatan':
+                    return {
+                pane: 'pane_PenggunaanLahan_4',
+                opacity: 1,
+                color: 'rgba(35,35,35,1.0)',
+                dashArray: '',
+                lineCap: 'butt',
+                lineJoin: 'miter',
+                weight: 1.0, 
+                fill: true,
+                fillOpacity: 1,
+                fillColor: 'rgba(165,160,186,1.0)',
+                interactive: true,
+            }
+                    break;
+                case 'Perkantoran':
+                    return {
+                pane: 'pane_PenggunaanLahan_4',
+                opacity: 1,
+                color: 'rgba(35,35,35,1.0)',
+                dashArray: '',
+                lineCap: 'butt',
+                lineJoin: 'miter',
+                weight: 1.0, 
+                fill: true,
+                fillOpacity: 1,
+                fillColor: 'rgba(198,153,122,1.0)',
+                interactive: true,
+            }
+                    break;
+                case 'Perkebunan':
+                    return {
+                pane: 'pane_PenggunaanLahan_4',
+                opacity: 1,
+                color: 'rgba(35,35,35,1.0)',
+                dashArray: '',
+                lineCap: 'butt',
+                lineJoin: 'miter',
+                weight: 1.0, 
+                fill: true,
+                fillOpacity: 1,
+                fillColor: 'rgba(216,255,201,1.0)',
+                interactive: true,
+            }
+                    break;
+                case 'Permukiman':
+                    return {
+                pane: 'pane_PenggunaanLahan_4',
+                opacity: 1,
+                color: 'rgba(35,35,35,1.0)',
+                dashArray: '',
+                lineCap: 'butt',
+                lineJoin: 'miter',
+                weight: 1.0, 
+                fill: true,
+                fillOpacity: 1,
+                fillColor: 'rgba(249,189,139,1.0)',
+                interactive: true,
+            }
+                    break;
             }
         }
         map.createPane('pane_PenggunaanLahan_4');
         map.getPane('pane_PenggunaanLahan_4').style.zIndex = 404;
         map.getPane('pane_PenggunaanLahan_4').style['mix-blend-mode'] = 'normal';
         var layer_PenggunaanLahan_4 = new L.geoJson(json_PenggunaanLahan_4, {
-            attribution: '', interactive: true, dataVar: 'json_PenggunaanLahan_4', layerName: 'layer_PenggunaanLahan_4', pane: 'pane_PenggunaanLahan_4', onEachFeature: pop_PenggunaanLahan_4, style: style_PenggunaanLahan_4_0,
+            attribution: '',
+            interactive: true,
+            dataVar: 'json_PenggunaanLahan_4',
+            layerName: 'layer_PenggunaanLahan_4',
+            pane: 'pane_PenggunaanLahan_4',
+            onEachFeature: pop_PenggunaanLahan_4,
+            style: style_PenggunaanLahan_4_0,
         });
         bounds_group.addLayer(layer_PenggunaanLahan_4);
-
+        // map.addLayer(layer_PenggunaanLahan_4);  // Available from the layer control; off initially for a clearer orthophoto view.
         function pop_BidangTanah_5(feature, layer) {
             layer.on({
                 mouseout: function(e) {
                     for (var i in e.target._eventParents) {
-                        if (typeof e.target._eventParents[i].resetStyle === 'function') e.target._eventParents[i].resetStyle(e.target);
+                        if (typeof e.target._eventParents[i].resetStyle === 'function') {
+                            e.target._eventParents[i].resetStyle(e.target);
+                        }
                     }
-                    if (typeof layer.closePopup == 'function') layer.closePopup(); else layer.eachLayer(function(feature){ feature.closePopup() });
+                    if (typeof layer.closePopup == 'function') {
+                        layer.closePopup();
+                    } else {
+                        layer.eachLayer(function(feature){
+                            feature.closePopup()
+                        });
+                    }
                 },
                 mouseover: highlightFeature,
             });
-            var popupContent = '<table>                    <tr><th scope="row">LUAS_M2</th><td>' + (feature.properties['LUAS_M2'] !== null ? autolinker.link(String(feature.properties['LUAS_M2']).replace(/'/g, ''').toLocaleString()) : '') + '</td></tr>                    <tr><th scope="row">NOMOR</th><td>' + (feature.properties['NOMOR'] !== null ? autolinker.link(String(feature.properties['NOMOR']).replace(/'/g, ''').toLocaleString()) : '') + '</td></tr>                    <tr><td colspan="2"><strong>NIB</strong><br />' + (feature.properties['NIB'] !== null ? autolinker.link(String(feature.properties['NIB']).replace(/'/g, ''').toLocaleString()) : '') + '</td></tr>                    <tr><th scope="row">TAHUN</th><td>' + (feature.properties['TAHUN'] !== null ? autolinker.link(String(feature.properties['TAHUN']).replace(/'/g, ''').toLocaleString()) : '') + '</td></tr>                    <tr><th scope="row">TIPE_HAK</th><td>' + (feature.properties['TIPE_HAK'] !== null ? autolinker.link(String(feature.properties['TIPE_HAK']).replace(/'/g, ''').toLocaleString()) : '') + '</td></tr>                    <tr><th scope="row">NAMA</th><td>' + (feature.properties['NAMA'] !== null ? autolinker.link(String(feature.properties['NAMA']).replace(/'/g, ''').toLocaleString()) : '') + '</td></tr>                    <tr><th scope="row">KODE</th><td>' + (feature.properties['KODE'] !== null ? autolinker.link(String(feature.properties['KODE']).replace(/'/g, ''').toLocaleString()) : '') + '</td></tr>                    <tr><th scope="row">DUSUN</th><td>' + (feature.properties['DUSUN'] !== null ? autolinker.link(String(feature.properties['DUSUN']).replace(/'/g, ''').toLocaleString()) : '') + '</td></tr>                </table>';
+            var popupContent = '<table>\
+                    <tr>\
+                        <th scope="row">LUAS_M2</th>\
+                        <td>' + (feature.properties['LUAS_M2'] !== null ? autolinker.link(String(feature.properties['LUAS_M2']).replace(/'/g, '\'').toLocaleString()) : '') + '</td>\
+                    </tr>\
+                    <tr>\
+                        <th scope="row">NOMOR</th>\
+                        <td>' + (feature.properties['NOMOR'] !== null ? autolinker.link(String(feature.properties['NOMOR']).replace(/'/g, '\'').toLocaleString()) : '') + '</td>\
+                    </tr>\
+                    <tr>\
+                        <td colspan="2"><strong>NIB</strong><br />' + (feature.properties['NIB'] !== null ? autolinker.link(String(feature.properties['NIB']).replace(/'/g, '\'').toLocaleString()) : '') + '</td>\
+                    </tr>\
+                    <tr>\
+                        <th scope="row">TAHUN</th>\
+                        <td>' + (feature.properties['TAHUN'] !== null ? autolinker.link(String(feature.properties['TAHUN']).replace(/'/g, '\'').toLocaleString()) : '') + '</td>\
+                    </tr>\
+                    <tr>\
+                        <th scope="row">TIPE_HAK</th>\
+                        <td>' + (feature.properties['TIPE_HAK'] !== null ? autolinker.link(String(feature.properties['TIPE_HAK']).replace(/'/g, '\'').toLocaleString()) : '') + '</td>\
+                    </tr>\
+                    <tr>\
+                        <th scope="row">NAMA</th>\
+                        <td>' + (feature.properties['NAMA'] !== null ? autolinker.link(String(feature.properties['NAMA']).replace(/'/g, '\'').toLocaleString()) : '') + '</td>\
+                    </tr>\
+                    <tr>\
+                        <th scope="row">KODE</th>\
+                        <td>' + (feature.properties['KODE'] !== null ? autolinker.link(String(feature.properties['KODE']).replace(/'/g, '\'').toLocaleString()) : '') + '</td>\
+                    </tr>\
+                    <tr>\
+                        <th scope="row">DUSUN</th>\
+                        <td>' + (feature.properties['DUSUN'] !== null ? autolinker.link(String(feature.properties['DUSUN']).replace(/'/g, '\'').toLocaleString()) : '') + '</td>\
+                    </tr>\
+                </table>';
             var content = removeEmptyRowsFromPopupContent(popupContent, feature);
-			layer.on('popupopen', function(e) { addClassToPopupIfMedia(content, e.popup); });
+			layer.on('popupopen', function(e) {
+				addClassToPopupIfMedia(content, e.popup);
+			});
 			layer.bindPopup(content, { maxHeight: 400 });
         }
 
         function style_BidangTanah_5_0() {
-            return { pane: 'pane_BidangTanah_5', opacity: 1, color: 'rgba(245,230,90,1.0)', dashArray: '', lineCap: 'butt', lineJoin: 'miter', weight: 2.0, fill: true, fillOpacity: 1, fillColor: 'rgba(255,158,23,0.0)', interactive: true }
+            return {
+                pane: 'pane_BidangTanah_5',
+                opacity: 1,
+                color: 'rgba(245,230,90,1.0)',
+                dashArray: '',
+                lineCap: 'butt',
+                lineJoin: 'miter',
+                weight: 2.0, 
+                fill: true,
+                fillOpacity: 1,
+                fillColor: 'rgba(255,158,23,0.0)',
+                interactive: true,
+            }
         }
         map.createPane('pane_BidangTanah_5');
         map.getPane('pane_BidangTanah_5').style.zIndex = 405;
         map.getPane('pane_BidangTanah_5').style['mix-blend-mode'] = 'normal';
         var layer_BidangTanah_5 = new L.geoJson(json_BidangTanah_5, {
-            attribution: '', interactive: true, dataVar: 'json_BidangTanah_5', layerName: 'layer_BidangTanah_5', pane: 'pane_BidangTanah_5', onEachFeature: pop_BidangTanah_5, style: style_BidangTanah_5_0,
+            attribution: '',
+            interactive: true,
+            dataVar: 'json_BidangTanah_5',
+            layerName: 'layer_BidangTanah_5',
+            pane: 'pane_BidangTanah_5',
+            onEachFeature: pop_BidangTanah_5,
+            style: style_BidangTanah_5_0,
         });
         bounds_group.addLayer(layer_BidangTanah_5);
-
+        // map.addLayer(layer_BidangTanah_5);  // Available from the layer control; off initially for a clearer orthophoto view.
         function pop_FasilitasUmum_6(feature, layer) {
             layer.on({
                 mouseout: function(e) {
                     for (var i in e.target._eventParents) {
-                        if (typeof e.target._eventParents[i].resetStyle === 'function') e.target._eventParents[i].resetStyle(e.target);
+                        if (typeof e.target._eventParents[i].resetStyle === 'function') {
+                            e.target._eventParents[i].resetStyle(e.target);
+                        }
                     }
-                    if (typeof layer.closePopup == 'function') layer.closePopup(); else layer.eachLayer(function(feature){ feature.closePopup() });
+                    if (typeof layer.closePopup == 'function') {
+                        layer.closePopup();
+                    } else {
+                        layer.eachLayer(function(feature){
+                            feature.closePopup()
+                        });
+                    }
                 },
                 mouseover: highlightFeature,
             });
-            var popupContent = '<table>                    <tr><th scope="row">fid</th><td>' + (feature.properties['fid'] !== null ? autolinker.link(String(feature.properties['fid']).replace(/'/g, ''').toLocaleString()) : '') + '</td></tr>                    <tr><td colspan="2"><strong>OBJEK</strong><br />' + (feature.properties['OBJEK'] !== null ? autolinker.link(String(feature.properties['OBJEK']).replace(/'/g, ''').toLocaleString()) : '') + '</td></tr>                    <tr><th scope="row">KATEGORI</th><td>' + (feature.properties['KATEGORI'] !== null ? autolinker.link(String(feature.properties['KATEGORI']).replace(/'/g, ''').toLocaleString()) : '') + '</td></tr>                </table>';
+            var popupContent = '<table>\
+                    <tr>\
+                        <th scope="row">fid</th>\
+                        <td>' + (feature.properties['fid'] !== null ? autolinker.link(String(feature.properties['fid']).replace(/'/g, '\'').toLocaleString()) : '') + '</td>\
+                    </tr>\
+                    <tr>\
+                        <td colspan="2"><strong>OBJEK</strong><br />' + (feature.properties['OBJEK'] !== null ? autolinker.link(String(feature.properties['OBJEK']).replace(/'/g, '\'').toLocaleString()) : '') + '</td>\
+                    </tr>\
+                    <tr>\
+                        <th scope="row">KATEGORI</th>\
+                        <td>' + (feature.properties['KATEGORI'] !== null ? autolinker.link(String(feature.properties['KATEGORI']).replace(/'/g, '\'').toLocaleString()) : '') + '</td>\
+                    </tr>\
+                </table>';
             var content = removeEmptyRowsFromPopupContent(popupContent, feature);
-			layer.on('popupopen', function(e) { addClassToPopupIfMedia(content, e.popup); });
+			layer.on('popupopen', function(e) {
+				addClassToPopupIfMedia(content, e.popup);
+			});
 			layer.bindPopup(content, { maxHeight: 400 });
         }
 
         function style_FasilitasUmum_6_0(feature) {
             switch(String(feature.properties['KATEGORI'])) {
-                case 'Apotek': return { pane: 'pane_FasilitasUmum_6', radius: 4.0, opacity: 1, color: 'rgba(255,255,255,1.0)', dashArray: '', lineCap: 'butt', lineJoin: 'miter', weight: 1.0, fill: true, fillOpacity: 1, fillColor: 'rgba(48,18,59,1.0)', interactive: true };
-                case 'BTS': return { pane: 'pane_FasilitasUmum_6', radius: 4.0, opacity: 1, color: 'rgba(255,255,255,1.0)', dashArray: '', lineCap: 'butt', lineJoin: 'miter', weight: 1.0, fill: true, fillOpacity: 1, fillColor: 'rgba(59,48,129,1.0)', interactive: true };
-                case 'Fasilitas Olahraga': return { pane: 'pane_FasilitasUmum_6', radius: 4.0, opacity: 1, color: 'rgba(255,255,255,1.0)', dashArray: '', lineCap: 'butt', lineJoin: 'miter', weight: 1.0, fill: true, fillOpacity: 1, fillColor: 'rgba(66,76,183,1.0)', interactive: true };
-                case 'Gardu Induk PLN': return { pane: 'pane_FasilitasUmum_6', radius: 4.0, opacity: 1, color: 'rgba(255,255,255,1.0)', dashArray: '', lineCap: 'butt', lineJoin: 'miter', weight: 1.0, fill: true, fillOpacity: 1, fillColor: 'rgba(70,104,223,1.0)', interactive: true };
-                case 'Gereja': return { pane: 'pane_FasilitasUmum_6', radius: 4.0, opacity: 1, color: 'rgba(255,255,255,1.0)', dashArray: '', lineCap: 'butt', lineJoin: 'miter', weight: 1.0, fill: true, fillOpacity: 1, fillColor: 'rgba(70,130,248,1.0)', interactive: true };
-                case 'Gudang': return { pane: 'pane_FasilitasUmum_6', radius: 4.0, opacity: 1, color: 'rgba(255,255,255,1.0)', dashArray: '', lineCap: 'butt', lineJoin: 'miter', weight: 1.0, fill: true, fillOpacity: 1, fillColor: 'rgba(62,156,254,1.0)', interactive: true };
-                case 'Kandang Peternakan': return { pane: 'pane_FasilitasUmum_6', radius: 4.0, opacity: 1, color: 'rgba(255,255,255,1.0)', dashArray: '', lineCap: 'butt', lineJoin: 'miter', weight: 1.0, fill: true, fillOpacity: 1, fillColor: 'rgba(45,181,241,1.0)', interactive: true };
-                case 'Kantor Kalurahan': return { pane: 'pane_FasilitasUmum_6', radius: 4.0, opacity: 1, color: 'rgba(255,255,255,1.0)', dashArray: '', lineCap: 'butt', lineJoin: 'miter', weight: 1.0, fill: true, fillOpacity: 1, fillColor: 'rgba(29,204,217,1.0)', interactive: true };
-                case 'Kantor Rocket Chicken': return { pane: 'pane_FasilitasUmum_6', radius: 4.0, opacity: 1, color: 'rgba(255,255,255,1.0)', dashArray: '', lineCap: 'butt', lineJoin: 'miter', weight: 1.0, fill: true, fillOpacity: 1, fillColor: 'rgba(24,224,189,1.0)', interactive: true };
-                case 'Klinik': return { pane: 'pane_FasilitasUmum_6', radius: 4.0, opacity: 1, color: 'rgba(255,255,255,1.0)', dashArray: '', lineCap: 'butt', lineJoin: 'miter', weight: 1.0, fill: true, fillOpacity: 1, fillColor: 'rgba(39,238,164,1.0)', interactive: true };
-                case 'Makam': return { pane: 'pane_FasilitasUmum_6', radius: 4.0, opacity: 1, color: 'rgba(255,255,255,1.0)', dashArray: '', lineCap: 'butt', lineJoin: 'miter', weight: 1.0, fill: true, fillOpacity: 1, fillColor: 'rgba(72,248,130,1.0)', interactive: true };
-                case 'Masjid': return { pane: 'pane_FasilitasUmum_6', radius: 4.0, opacity: 1, color: 'rgba(255,255,255,1.0)', dashArray: '', lineCap: 'butt', lineJoin: 'miter', weight: 1.0, fill: true, fillOpacity: 1, fillColor: 'rgba(112,254,96,1.0)', interactive: true };
-                case 'Mushola': return { pane: 'pane_FasilitasUmum_6', radius: 4.0, opacity: 1, color: 'rgba(255,255,255,1.0)', dashArray: '', lineCap: 'butt', lineJoin: 'miter', weight: 1.0, fill: true, fillOpacity: 1, fillColor: 'rgba(150,254,68,1.0)', interactive: true };
-                case 'Pabrik': return { pane: 'pane_FasilitasUmum_6', radius: 4.0, opacity: 1, color: 'rgba(255,255,255,1.0)', dashArray: '', lineCap: 'butt', lineJoin: 'miter', weight: 1.0, fill: true, fillOpacity: 1, fillColor: 'rgba(177,249,54,1.0)', interactive: true };
-                case 'Pasar': return { pane: 'pane_FasilitasUmum_6', radius: 4.0, opacity: 1, color: 'rgba(255,255,255,1.0)', dashArray: '', lineCap: 'butt', lineJoin: 'miter', weight: 1.0, fill: true, fillOpacity: 1, fillColor: 'rgba(204,237,52,1.0)', interactive: true };
-                case 'Pendidikan Dasar': return { pane: 'pane_FasilitasUmum_6', radius: 4.0, opacity: 1, color: 'rgba(255,255,255,1.0)', dashArray: '', lineCap: 'butt', lineJoin: 'miter', weight: 1.0, fill: true, fillOpacity: 1, fillColor: 'rgba(226,220,56,1.0)', interactive: true };
-                case 'Pendidikan Lain': return { pane: 'pane_FasilitasUmum_6', radius: 4.0, opacity: 1, color: 'rgba(255,255,255,1.0)', dashArray: '', lineCap: 'butt', lineJoin: 'miter', weight: 1.0, fill: true, fillOpacity: 1, fillColor: 'rgba(244,199,58,1.0)', interactive: true };
-                case 'Pendidikan Menengah Pertama': return { pane: 'pane_FasilitasUmum_6', radius: 4.0, opacity: 1, color: 'rgba(255,255,255,1.0)', dashArray: '', lineCap: 'butt', lineJoin: 'miter', weight: 1.0, fill: true, fillOpacity: 1, fillColor: 'rgba(252,177,54,1.0)', interactive: true };
-                case 'Perumahan': return { pane: 'pane_FasilitasUmum_6', radius: 4.0, opacity: 1, color: 'rgba(255,255,255,1.0)', dashArray: '', lineCap: 'butt', lineJoin: 'miter', weight: 1.0, fill: true, fillOpacity: 1, fillColor: 'rgba(254,149,43,1.0)', interactive: true };
-                case 'Pondok Pesantren': return { pane: 'pane_FasilitasUmum_6', radius: 4.0, opacity: 1, color: 'rgba(255,255,255,1.0)', dashArray: '', lineCap: 'butt', lineJoin: 'miter', weight: 1.0, fill: true, fillOpacity: 1, fillColor: 'rgba(249,118,29,1.0)', interactive: true };
-                case 'Rumah Makan': return { pane: 'pane_FasilitasUmum_6', radius: 4.0, opacity: 1, color: 'rgba(255,255,255,1.0)', dashArray: '', lineCap: 'butt', lineJoin: 'miter', weight: 1.0, fill: true, fillOpacity: 1, fillColor: 'rgba(239,89,17,1.0)', interactive: true };
-                case 'SPBU': return { pane: 'pane_FasilitasUmum_6', radius: 4.0, opacity: 1, color: 'rgba(255,255,255,1.0)', dashArray: '', lineCap: 'butt', lineJoin: 'miter', weight: 1.0, fill: true, fillOpacity: 1, fillColor: 'rgba(225,65,9,1.0)', interactive: true };
-                case 'Toko dan Jasa': return { pane: 'pane_FasilitasUmum_6', radius: 4.0, opacity: 1, color: 'rgba(255,255,255,1.0)', dashArray: '', lineCap: 'butt', lineJoin: 'miter', weight: 1.0, fill: true, fillOpacity: 1, fillColor: 'rgba(205,44,4,1.0)', interactive: true };
-                case 'Tugu': return { pane: 'pane_FasilitasUmum_6', radius: 4.0, opacity: 1, color: 'rgba(255,255,255,1.0)', dashArray: '', lineCap: 'butt', lineJoin: 'miter', weight: 1.0, fill: true, fillOpacity: 1, fillColor: 'rgba(181,28,1,1.0)', interactive: true };
-                case 'UMKM': return { pane: 'pane_FasilitasUmum_6', radius: 4.0, opacity: 1, color: 'rgba(255,255,255,1.0)', dashArray: '', lineCap: 'butt', lineJoin: 'miter', weight: 1.0, fill: true, fillOpacity: 1, fillColor: 'rgba(153,14,1,1.0)', interactive: true };
-                case 'Villa': return { pane: 'pane_FasilitasUmum_6', radius: 4.0, opacity: 1, color: 'rgba(255,255,255,1.0)', dashArray: '', lineCap: 'butt', lineJoin: 'miter', weight: 1.0, fill: true, fillOpacity: 1, fillColor: 'rgba(122,4,3,1.0)', interactive: true };
+                case 'Apotek':
+                    return {
+                pane: 'pane_FasilitasUmum_6',
+                radius: 4.0,
+                opacity: 1,
+                color: 'rgba(255,255,255,1.0)',
+                dashArray: '',
+                lineCap: 'butt',
+                lineJoin: 'miter',
+                weight: 1.0,
+                fill: true,
+                fillOpacity: 1,
+                fillColor: 'rgba(48,18,59,1.0)',
+                interactive: true,
+            }
+                    break;
+                case 'BTS':
+                    return {
+                pane: 'pane_FasilitasUmum_6',
+                radius: 4.0,
+                opacity: 1,
+                color: 'rgba(255,255,255,1.0)',
+                dashArray: '',
+                lineCap: 'butt',
+                lineJoin: 'miter',
+                weight: 1.0,
+                fill: true,
+                fillOpacity: 1,
+                fillColor: 'rgba(59,48,129,1.0)',
+                interactive: true,
+            }
+                    break;
+                case 'Fasilitas Olahraga':
+                    return {
+                pane: 'pane_FasilitasUmum_6',
+                radius: 4.0,
+                opacity: 1,
+                color: 'rgba(255,255,255,1.0)',
+                dashArray: '',
+                lineCap: 'butt',
+                lineJoin: 'miter',
+                weight: 1.0,
+                fill: true,
+                fillOpacity: 1,
+                fillColor: 'rgba(66,76,183,1.0)',
+                interactive: true,
+            }
+                    break;
+                case 'Gardu Induk PLN':
+                    return {
+                pane: 'pane_FasilitasUmum_6',
+                radius: 4.0,
+                opacity: 1,
+                color: 'rgba(255,255,255,1.0)',
+                dashArray: '',
+                lineCap: 'butt',
+                lineJoin: 'miter',
+                weight: 1.0,
+                fill: true,
+                fillOpacity: 1,
+                fillColor: 'rgba(70,104,223,1.0)',
+                interactive: true,
+            }
+                    break;
+                case 'Gereja':
+                    return {
+                pane: 'pane_FasilitasUmum_6',
+                radius: 4.0,
+                opacity: 1,
+                color: 'rgba(255,255,255,1.0)',
+                dashArray: '',
+                lineCap: 'butt',
+                lineJoin: 'miter',
+                weight: 1.0,
+                fill: true,
+                fillOpacity: 1,
+                fillColor: 'rgba(70,130,248,1.0)',
+                interactive: true,
+            }
+                    break;
+                case 'Gudang':
+                    return {
+                pane: 'pane_FasilitasUmum_6',
+                radius: 4.0,
+                opacity: 1,
+                color: 'rgba(255,255,255,1.0)',
+                dashArray: '',
+                lineCap: 'butt',
+                lineJoin: 'miter',
+                weight: 1.0,
+                fill: true,
+                fillOpacity: 1,
+                fillColor: 'rgba(62,156,254,1.0)',
+                interactive: true,
+            }
+                    break;
+                case 'Kandang Peternakan':
+                    return {
+                pane: 'pane_FasilitasUmum_6',
+                radius: 4.0,
+                opacity: 1,
+                color: 'rgba(255,255,255,1.0)',
+                dashArray: '',
+                lineCap: 'butt',
+                lineJoin: 'miter',
+                weight: 1.0,
+                fill: true,
+                fillOpacity: 1,
+                fillColor: 'rgba(45,181,241,1.0)',
+                interactive: true,
+            }
+                    break;
+                case 'Kantor Kalurahan':
+                    return {
+                pane: 'pane_FasilitasUmum_6',
+                radius: 4.0,
+                opacity: 1,
+                color: 'rgba(255,255,255,1.0)',
+                dashArray: '',
+                lineCap: 'butt',
+                lineJoin: 'miter',
+                weight: 1.0,
+                fill: true,
+                fillOpacity: 1,
+                fillColor: 'rgba(29,204,217,1.0)',
+                interactive: true,
+            }
+                    break;
+                case 'Kantor Rocket Chicken':
+                    return {
+                pane: 'pane_FasilitasUmum_6',
+                radius: 4.0,
+                opacity: 1,
+                color: 'rgba(255,255,255,1.0)',
+                dashArray: '',
+                lineCap: 'butt',
+                lineJoin: 'miter',
+                weight: 1.0,
+                fill: true,
+                fillOpacity: 1,
+                fillColor: 'rgba(24,224,189,1.0)',
+                interactive: true,
+            }
+                    break;
+                case 'Klinik':
+                    return {
+                pane: 'pane_FasilitasUmum_6',
+                radius: 4.0,
+                opacity: 1,
+                color: 'rgba(255,255,255,1.0)',
+                dashArray: '',
+                lineCap: 'butt',
+                lineJoin: 'miter',
+                weight: 1.0,
+                fill: true,
+                fillOpacity: 1,
+                fillColor: 'rgba(39,238,164,1.0)',
+                interactive: true,
+            }
+                    break;
+                case 'Makam':
+                    return {
+                pane: 'pane_FasilitasUmum_6',
+                radius: 4.0,
+                opacity: 1,
+                color: 'rgba(255,255,255,1.0)',
+                dashArray: '',
+                lineCap: 'butt',
+                lineJoin: 'miter',
+                weight: 1.0,
+                fill: true,
+                fillOpacity: 1,
+                fillColor: 'rgba(72,248,130,1.0)',
+                interactive: true,
+            }
+                    break;
+                case 'Masjid':
+                    return {
+                pane: 'pane_FasilitasUmum_6',
+                radius: 4.0,
+                opacity: 1,
+                color: 'rgba(255,255,255,1.0)',
+                dashArray: '',
+                lineCap: 'butt',
+                lineJoin: 'miter',
+                weight: 1.0,
+                fill: true,
+                fillOpacity: 1,
+                fillColor: 'rgba(112,254,96,1.0)',
+                interactive: true,
+            }
+                    break;
+                case 'Mushola':
+                    return {
+                pane: 'pane_FasilitasUmum_6',
+                radius: 4.0,
+                opacity: 1,
+                color: 'rgba(255,255,255,1.0)',
+                dashArray: '',
+                lineCap: 'butt',
+                lineJoin: 'miter',
+                weight: 1.0,
+                fill: true,
+                fillOpacity: 1,
+                fillColor: 'rgba(150,254,68,1.0)',
+                interactive: true,
+            }
+                    break;
+                case 'Pabrik':
+                    return {
+                pane: 'pane_FasilitasUmum_6',
+                radius: 4.0,
+                opacity: 1,
+                color: 'rgba(255,255,255,1.0)',
+                dashArray: '',
+                lineCap: 'butt',
+                lineJoin: 'miter',
+                weight: 1.0,
+                fill: true,
+                fillOpacity: 1,
+                fillColor: 'rgba(177,249,54,1.0)',
+                interactive: true,
+            }
+                    break;
+                case 'Pasar':
+                    return {
+                pane: 'pane_FasilitasUmum_6',
+                radius: 4.0,
+                opacity: 1,
+                color: 'rgba(255,255,255,1.0)',
+                dashArray: '',
+                lineCap: 'butt',
+                lineJoin: 'miter',
+                weight: 1.0,
+                fill: true,
+                fillOpacity: 1,
+                fillColor: 'rgba(204,237,52,1.0)',
+                interactive: true,
+            }
+                    break;
+                case 'Pendidikan Dasar':
+                    return {
+                pane: 'pane_FasilitasUmum_6',
+                radius: 4.0,
+                opacity: 1,
+                color: 'rgba(255,255,255,1.0)',
+                dashArray: '',
+                lineCap: 'butt',
+                lineJoin: 'miter',
+                weight: 1.0,
+                fill: true,
+                fillOpacity: 1,
+                fillColor: 'rgba(226,220,56,1.0)',
+                interactive: true,
+            }
+                    break;
+                case 'Pendidikan Lain':
+                    return {
+                pane: 'pane_FasilitasUmum_6',
+                radius: 4.0,
+                opacity: 1,
+                color: 'rgba(255,255,255,1.0)',
+                dashArray: '',
+                lineCap: 'butt',
+                lineJoin: 'miter',
+                weight: 1.0,
+                fill: true,
+                fillOpacity: 1,
+                fillColor: 'rgba(244,199,58,1.0)',
+                interactive: true,
+            }
+                    break;
+                case 'Pendidikan Menengah Pertama':
+                    return {
+                pane: 'pane_FasilitasUmum_6',
+                radius: 4.0,
+                opacity: 1,
+                color: 'rgba(255,255,255,1.0)',
+                dashArray: '',
+                lineCap: 'butt',
+                lineJoin: 'miter',
+                weight: 1.0,
+                fill: true,
+                fillOpacity: 1,
+                fillColor: 'rgba(252,177,54,1.0)',
+                interactive: true,
+            }
+                    break;
+                case 'Perumahan':
+                    return {
+                pane: 'pane_FasilitasUmum_6',
+                radius: 4.0,
+                opacity: 1,
+                color: 'rgba(255,255,255,1.0)',
+                dashArray: '',
+                lineCap: 'butt',
+                lineJoin: 'miter',
+                weight: 1.0,
+                fill: true,
+                fillOpacity: 1,
+                fillColor: 'rgba(254,149,43,1.0)',
+                interactive: true,
+            }
+                    break;
+                case 'Pondok Pesantren':
+                    return {
+                pane: 'pane_FasilitasUmum_6',
+                radius: 4.0,
+                opacity: 1,
+                color: 'rgba(255,255,255,1.0)',
+                dashArray: '',
+                lineCap: 'butt',
+                lineJoin: 'miter',
+                weight: 1.0,
+                fill: true,
+                fillOpacity: 1,
+                fillColor: 'rgba(249,118,29,1.0)',
+                interactive: true,
+            }
+                    break;
+                case 'Rumah Makan':
+                    return {
+                pane: 'pane_FasilitasUmum_6',
+                radius: 4.0,
+                opacity: 1,
+                color: 'rgba(255,255,255,1.0)',
+                dashArray: '',
+                lineCap: 'butt',
+                lineJoin: 'miter',
+                weight: 1.0,
+                fill: true,
+                fillOpacity: 1,
+                fillColor: 'rgba(239,89,17,1.0)',
+                interactive: true,
+            }
+                    break;
+                case 'SPBU':
+                    return {
+                pane: 'pane_FasilitasUmum_6',
+                radius: 4.0,
+                opacity: 1,
+                color: 'rgba(255,255,255,1.0)',
+                dashArray: '',
+                lineCap: 'butt',
+                lineJoin: 'miter',
+                weight: 1.0,
+                fill: true,
+                fillOpacity: 1,
+                fillColor: 'rgba(225,65,9,1.0)',
+                interactive: true,
+            }
+                    break;
+                case 'Toko dan Jasa':
+                    return {
+                pane: 'pane_FasilitasUmum_6',
+                radius: 4.0,
+                opacity: 1,
+                color: 'rgba(255,255,255,1.0)',
+                dashArray: '',
+                lineCap: 'butt',
+                lineJoin: 'miter',
+                weight: 1.0,
+                fill: true,
+                fillOpacity: 1,
+                fillColor: 'rgba(205,44,4,1.0)',
+                interactive: true,
+            }
+                    break;
+                case 'Tugu':
+                    return {
+                pane: 'pane_FasilitasUmum_6',
+                radius: 4.0,
+                opacity: 1,
+                color: 'rgba(255,255,255,1.0)',
+                dashArray: '',
+                lineCap: 'butt',
+                lineJoin: 'miter',
+                weight: 1.0,
+                fill: true,
+                fillOpacity: 1,
+                fillColor: 'rgba(181,28,1,1.0)',
+                interactive: true,
+            }
+                    break;
+                case 'UMKM':
+                    return {
+                pane: 'pane_FasilitasUmum_6',
+                radius: 4.0,
+                opacity: 1,
+                color: 'rgba(255,255,255,1.0)',
+                dashArray: '',
+                lineCap: 'butt',
+                lineJoin: 'miter',
+                weight: 1.0,
+                fill: true,
+                fillOpacity: 1,
+                fillColor: 'rgba(153,14,1,1.0)',
+                interactive: true,
+            }
+                    break;
+                case 'Villa':
+                    return {
+                pane: 'pane_FasilitasUmum_6',
+                radius: 4.0,
+                opacity: 1,
+                color: 'rgba(255,255,255,1.0)',
+                dashArray: '',
+                lineCap: 'butt',
+                lineJoin: 'miter',
+                weight: 1.0,
+                fill: true,
+                fillOpacity: 1,
+                fillColor: 'rgba(122,4,3,1.0)',
+                interactive: true,
+            }
+                    break;
             }
         }
         map.createPane('pane_FasilitasUmum_6');
         map.getPane('pane_FasilitasUmum_6').style.zIndex = 406;
         map.getPane('pane_FasilitasUmum_6').style['mix-blend-mode'] = 'normal';
         var layer_FasilitasUmum_6 = new L.geoJson(json_FasilitasUmum_6, {
-            attribution: '', interactive: true, dataVar: 'json_FasilitasUmum_6', layerName: 'layer_FasilitasUmum_6', pane: 'pane_FasilitasUmum_6', onEachFeature: pop_FasilitasUmum_6,
-            pointToLayer: function (feature, latlng) { return L.circleMarker(latlng, style_FasilitasUmum_6_0(feature)); },
+            attribution: '',
+            interactive: true,
+            dataVar: 'json_FasilitasUmum_6',
+            layerName: 'layer_FasilitasUmum_6',
+            pane: 'pane_FasilitasUmum_6',
+            onEachFeature: pop_FasilitasUmum_6,
+            pointToLayer: function (feature, latlng) {
+                var context = {
+                    feature: feature,
+                    variables: {}
+                };
+                return L.circleMarker(latlng, style_FasilitasUmum_6_0(feature));
+            },
         });
         bounds_group.addLayer(layer_FasilitasUmum_6);
         map.addLayer(layer_FasilitasUmum_6);
-
-        // Basemaps
-        var baseOSM = L.tileLayer('https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png', { minZoom: 14, maxZoom: 19, attribution: '&copy; OpenStreetMap contributors' });
-        var baseSatellite = L.tileLayer('https://services.arcgisonline.com/ArcGIS/rest/services/World_Imagery/MapServer/tile/{z}/{y}/{x}', { minZoom: 14, maxZoom: 19, attribution: 'Tiles &copy; Esri' });
+        // Basemap layers
+        var baseOSM = L.tileLayer('https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png', {
+            minZoom: 14,
+            maxZoom: 19,
+            attribution: '&copy; OpenStreetMap contributors'
+        });
+        var baseSatellite = L.tileLayer('https://services.arcgisonline.com/ArcGIS/rest/services/World_Imagery/MapServer/tile/{z}/{y}/{x}', {
+            minZoom: 14,
+            maxZoom: 19,
+            attribution: 'Tiles &copy; Esri'
+        });
         baseOSM.addTo(map);
 
-        var orthophotoSidomoyo = L.tileLayer('orthophoto_tiles/{z}/{x}/{y}.png', { minZoom: 14, maxZoom: 19, maxNativeZoom: 19, tms: false, opacity: 1, attribution: 'Orthophoto Sidomoyo' });
+        // Orthophoto overlay
+        var orthophotoSidomoyo = L.tileLayer('orthophoto_tiles/{z}/{x}/{y}.png', {
+            minZoom: 14,
+            maxZoom: 19,
+            maxNativeZoom: 19,
+            tms: false,
+            opacity: 1,
+            attribution: 'Orthophoto Sidomoyo'
+        });
         orthophotoSidomoyo.addTo(map);
 
-        var baseTree = [ {label: 'OpenStreetMap', layer: baseOSM}, {label: 'Satelit', layer: baseSatellite} ];
+        var baseTree = [
+            {label: 'OpenStreetMap', layer: baseOSM},
+            {label: 'Satelit', layer: baseSatellite}
+        ];
+
         var overlaysTree = [
             {label: 'Orthophoto Sidomoyo', layer: orthophotoSidomoyo},
             {label: 'Fasilitas Umum<br /><table><tr><td style="text-align: center;"><img src="legend/FasilitasUmum_6_Apotek0.png" /></td><td>Apotek</td></tr><tr><td style="text-align: center;"><img src="legend/FasilitasUmum_6_BTS1.png" /></td><td>BTS</td></tr><tr><td style="text-align: center;"><img src="legend/FasilitasUmum_6_FasilitasOlahraga2.png" /></td><td>Fasilitas Olahraga</td></tr><tr><td style="text-align: center;"><img src="legend/FasilitasUmum_6_GarduIndukPLN3.png" /></td><td>Gardu Induk PLN</td></tr><tr><td style="text-align: center;"><img src="legend/FasilitasUmum_6_Gereja4.png" /></td><td>Gereja</td></tr><tr><td style="text-align: center;"><img src="legend/FasilitasUmum_6_Gudang5.png" /></td><td>Gudang</td></tr><tr><td style="text-align: center;"><img src="legend/FasilitasUmum_6_KandangPeternakan6.png" /></td><td>Kandang Peternakan</td></tr><tr><td style="text-align: center;"><img src="legend/FasilitasUmum_6_KantorKalurahan7.png" /></td><td>Kantor Kalurahan</td></tr><tr><td style="text-align: center;"><img src="legend/FasilitasUmum_6_KantorRocketChicken8.png" /></td><td>Kantor Rocket Chicken</td></tr><tr><td style="text-align: center;"><img src="legend/FasilitasUmum_6_Klinik9.png" /></td><td>Klinik</td></tr><tr><td style="text-align: center;"><img src="legend/FasilitasUmum_6_Makam10.png" /></td><td>Makam</td></tr><tr><td style="text-align: center;"><img src="legend/FasilitasUmum_6_Masjid11.png" /></td><td>Masjid</td></tr><tr><td style="text-align: center;"><img src="legend/FasilitasUmum_6_Mushola12.png" /></td><td>Mushola</td></tr><tr><td style="text-align: center;"><img src="legend/FasilitasUmum_6_Pabrik13.png" /></td><td>Pabrik</td></tr><tr><td style="text-align: center;"><img src="legend/FasilitasUmum_6_Pasar14.png" /></td><td>Pasar</td></tr><tr><td style="text-align: center;"><img src="legend/FasilitasUmum_6_PendidikanDasar15.png" /></td><td>Pendidikan Dasar</td></tr><tr><td style="text-align: center;"><img src="legend/FasilitasUmum_6_PendidikanLain16.png" /></td><td>Pendidikan Lain</td></tr><tr><td style="text-align: center;"><img src="legend/FasilitasUmum_6_PendidikanMenengahPertama17.png" /></td><td>Pendidikan Menengah Pertama</td></tr><tr><td style="text-align: center;"><img src="legend/FasilitasUmum_6_Perumahan18.png" /></td><td>Perumahan</td></tr><tr><td style="text-align: center;"><img src="legend/FasilitasUmum_6_PondokPesantren19.png" /></td><td>Pondok Pesantren</td></tr><tr><td style="text-align: center;"><img src="legend/FasilitasUmum_6_RumahMakan20.png" /></td><td>Rumah Makan</td></tr><tr><td style="text-align: center;"><img src="legend/FasilitasUmum_6_SPBU21.png" /></td><td>SPBU</td></tr><tr><td style="text-align: center;"><img src="legend/FasilitasUmum_6_TokodanJasa22.png" /></td><td>Toko dan Jasa</td></tr><tr><td style="text-align: center;"><img src="legend/FasilitasUmum_6_Tugu23.png" /></td><td>Tugu</td></tr><tr><td style="text-align: center;"><img src="legend/FasilitasUmum_6_UMKM24.png" /></td><td>UMKM</td></tr><tr><td style="text-align: center;"><img src="legend/FasilitasUmum_6_Villa25.png" /></td><td>Villa</td></tr></table>', layer: layer_FasilitasUmum_6},
@@ -826,15 +1755,19 @@ body{
             {label: '<img src="legend/BatasDusun_1.png" /> Batas Dusun', layer: layer_BatasDusun_1},
             {label: 'Tutupan Lahan<br /><table><tr><td style="text-align: center;"><img src="legend/TutupanLahan_0_Gedung0.png" /></td><td>Gedung</td></tr><tr><td style="text-align: center;"><img src="legend/TutupanLahan_0_KebunPerkebunan1.png" /></td><td>Kebun/Perkebunan</td></tr><tr><td style="text-align: center;"><img src="legend/TutupanLahan_0_Permukiman2.png" /></td><td>Permukiman</td></tr><tr><td style="text-align: center;"><img src="legend/TutupanLahan_0_Sawahirigasi3.png" /></td><td>Sawah irigasi</td></tr></table>', layer: layer_TutupanLahan_0}
         ];
-        var lay = L.control.layers.tree(baseTree, overlaysTree, { position: 'topleft', collapsed: true });
+        var lay = L.control.layers.tree(baseTree, overlaysTree, {
+            position: 'topleft',
+            collapsed: true
+        });
         lay.addTo(map);
-
 		document.addEventListener("DOMContentLoaded", function() {
+            // set new Layers List height which considers toggle icon
             function newLayersListHeight() {
                 var layerScrollbarElement = document.querySelector('.leaflet-control-layers-scrollbar');
                 if (layerScrollbarElement) {
                     var layersListElement = document.querySelector('.leaflet-control-layers-list');
-                    var originalHeight = layersListElement.style.height || window.getComputedStyle(layersListElement).height;
+                    var originalHeight = layersListElement.style.height 
+                        || window.getComputedStyle(layersListElement).height;
                     var newHeight = parseFloat(originalHeight) - 50;
                     layersListElement.style.height = newHeight + 'px';
                 }
@@ -842,20 +1775,33 @@ body{
             var isLayersListExpanded = true;
             var controlLayersElement = document.querySelector('.leaflet-control-layers');
             var toggleLayerControl = document.querySelector('.leaflet-control-layers-toggle');
+            // toggle Collapsed/Expanded and apply new Layers List height
             toggleLayerControl.addEventListener('click', function() {
-                if (isLayersListExpanded) { controlLayersElement.classList.remove('leaflet-control-layers-expanded'); } 
-                else { controlLayersElement.classList.add('leaflet-control-layers-expanded'); }
+                if (isLayersListExpanded) {
+                    controlLayersElement.classList.remove('leaflet-control-layers-expanded');
+                } else {
+                    controlLayersElement.classList.add('leaflet-control-layers-expanded');
+                }
                 isLayersListExpanded = !isLayersListExpanded;
-                newLayersListHeight();
+                newLayersListHeight()
             });	
+			// apply new Layers List height if toggle layerstree
 			if (controlLayersElement) {
 				controlLayersElement.addEventListener('click', function(event) {
 					var toggleLayerHeaderPointer = event.target.closest('.leaflet-layerstree-header-pointer span');
-					if (toggleLayerHeaderPointer) { newLayersListHeight(); }
+					if (toggleLayerHeaderPointer) {
+						newLayersListHeight();
+					}
 				});
 			}
-            setTimeout(function() { toggleLayerControl.click(); }, 10);
-            setTimeout(function() { toggleLayerControl.click(); }, 10);
+            // Collapsed/Expanded at Start to apply new height
+            setTimeout(function() {
+                toggleLayerControl.click();
+            }, 10);
+            setTimeout(function() {
+                toggleLayerControl.click();
+            }, 10);
+            // Collapsed touch/small screen
             var isSmallScreen = window.innerWidth < 650;
             if (isSmallScreen) {
                 setTimeout(function() {
@@ -866,35 +1812,51 @@ body{
         });       
         setBounds();
         map.addControl(new L.Control.Search({
-            layer: layer_BidangTanah_5, initial: false, hideMarkerOnCollapse: true, propertyName: 'NIB'}));
+            layer: layer_BidangTanah_5,
+            initial: false,
+            hideMarkerOnCollapse: true,
+            propertyName: 'NIB'}));
         if (typeof url === 'undefined') {
             document.getElementsByClassName('search-button')[0].className += ' fa fa-binoculars';
         } else {
             document.getElementsByClassName('search-button')[1].className += ' fa fa-binoculars';
         }
         var mapDiv = document.getElementById('map');
-        var row = document.createElement('div'); row.id = "all";
-        var col1 = document.createElement('div'); col1.id = "mapWindow";
-        var col2 = document.createElement('div'); col2.id = "menu"; col2.className = "menu-hidden";
+        var row = document.createElement('div');
+        row.id = "all";
+        var col1 = document.createElement('div');
+        col1.id = "mapWindow";
+        var col2 = document.createElement('div');
+        col2.id = "menu";
+        col2.className = "menu-hidden";
 
         mapDiv.parentNode.insertBefore(row, mapDiv);
-        row.appendChild(col1); row.appendChild(col2); col1.appendChild(mapDiv);
+        row.appendChild(col1);
+        row.appendChild(col2);
+        col1.appendChild(mapDiv);
 
+        // Panel toggle button
         var toggleBtn = document.createElement('button');
-        toggleBtn.className = 'menu-toggle'; toggleBtn.type = 'button';
+        toggleBtn.className = 'menu-toggle';
+        toggleBtn.type = 'button';
         toggleBtn.innerHTML = '<i class="fas fa-sliders-h"></i> Filter & Query';
         row.appendChild(toggleBtn);
 
+        // Watermark
         var watermark = document.createElement('div');
         watermark.className = 'map-watermark';
         watermark.innerHTML = 'WebGIS Sidomoyo<small>© 2026 PRGG Teknik Geodesi UGM</small>';
         row.appendChild(watermark);
 
+        // Menu header
         var menuHeader = document.createElement('div');
         menuHeader.className = 'menu-header';
         menuHeader.innerHTML = '' +
           '<div class="menu-topline">' +
-            '<div><h3 class="menu-title">Filter & Query Data</h3><p class="menu-subtitle">Gunakan filter berikut untuk menyeleksi objek, dusun, dan tipe hak.</p></div>' +
+            '<div>' +
+              '<h3 class="menu-title">Filter & Query Data</h3>' +
+              '<p class="menu-subtitle">Gunakan filter berikut untuk menyeleksi objek, dusun, dan tipe hak.</p>' +
+            '</div>' +
             '<button type="button" class="menu-btn menu-close" title="Tutup panel"><i class="fas fa-times"></i></button>' +
           '</div>' +
           '<div class="menu-actions">' +
@@ -916,10 +1878,17 @@ body{
                 watermark.classList.remove('hidden-by-panel');
             }
         }
-        toggleBtn.addEventListener('click', function() { syncPanelState(col2.classList.contains('menu-hidden')); });
-        menuHeader.querySelector('.menu-close').addEventListener('click', function() { syncPanelState(false); });
-        if (window.innerWidth > 960) { syncPanelState(false); }
+        toggleBtn.addEventListener('click', function() {
+            syncPanelState(col2.classList.contains('menu-hidden'));
+        });
+        menuHeader.querySelector('.menu-close').addEventListener('click', function() {
+            syncPanelState(false);
+        });
+        if (window.innerWidth > 960) {
+            syncPanelState(false);
+        }
 
+        // Quick basemap switcher
         var baseMapControl = L.control({position: 'bottomleft'});
         baseMapControl.onAdd = function() {
             var div = L.DomUtil.create('div', 'basemap-switcher');
@@ -943,9 +1912,12 @@ body{
         }
         setTimeout(function() {
             document.querySelectorAll('.basemap-switcher button').forEach(function(btn){
-                btn.addEventListener('click', function(){ activateBase(btn.getAttribute('data-base')); });
+                btn.addEventListener('click', function(){
+                    activateBase(btn.getAttribute('data-base'));
+                });
             });
         }, 50);
+
 
         function postToParent(payload) {
             try { window.parent.postMessage(payload, '*'); } catch (e) { console.warn(e); }
@@ -953,12 +1925,16 @@ body{
 
         function toggleLayerPanel() {
             var toggle = document.querySelector('.leaflet-control-layers-toggle');
-            if (toggle) { toggle.dispatchEvent(new MouseEvent('click', {bubbles: true})); }
+            if (toggle) {
+                toggle.dispatchEvent(new MouseEvent('click', {bubbles: true}));
+            }
         }
 
         var nibSearchHighlight = null;
         function clearNibSearchResult() {
-            if (nibSearchHighlight && map.hasLayer(nibSearchHighlight)) { map.removeLayer(nibSearchHighlight); }
+            if (nibSearchHighlight && map.hasLayer(nibSearchHighlight)) {
+                map.removeLayer(nibSearchHighlight);
+            }
             nibSearchHighlight = null;
             try { layer_BidangTanah_5.closePopup(); } catch (e) {}
         }
@@ -972,48 +1948,32 @@ body{
                 if (foundLayer) return;
                 var props = (lyr.feature && lyr.feature.properties) ? lyr.feature.properties : {};
                 var nib = String(props.NIB == null ? '' : props.NIB).trim().toLowerCase();
-                if (nib === q || (q && nib.indexOf(q) !== -1)) { foundLayer = lyr; }
+                if (nib === q || (q && nib.indexOf(q) !== -1)) {
+                    foundLayer = lyr;
+                }
             });
             if (foundLayer) {
-                if (!map.hasLayer(layer_BidangTanah_5)) { map.addLayer(layer_BidangTanah_5); }
+                if (!map.hasLayer(layer_BidangTanah_5)) {
+                    map.addLayer(layer_BidangTanah_5);
+                }
                 nibSearchHighlight = L.geoJSON(foundLayer.toGeoJSON(), {
-                    style: function() { return {color:'#d62828', weight:4, opacity:1, fillColor:'#ffbe0b', fillOpacity:0.18}; },
+                    style: function() {
+                        return {color:'#d62828', weight:4, opacity:1, fillColor:'#ffbe0b', fillOpacity:0.18};
+                    },
                     pane: 'pane_BidangTanah_5'
                 }).addTo(map);
                 var bounds = foundLayer.getBounds ? foundLayer.getBounds() : nibSearchHighlight.getBounds();
-                if (bounds && bounds.isValid()) { map.fitBounds(bounds.pad(0.6), {maxZoom: 20}); }
-                if (typeof foundLayer.openPopup === 'function') { foundLayer.openPopup(); }
+                if (bounds && bounds.isValid()) {
+                    map.fitBounds(bounds.pad(0.6), {maxZoom: 20});
+                }
+                if (typeof foundLayer.openPopup === 'function') {
+                    foundLayer.openPopup();
+                }
                 postToParent({type:'nibSearchResult', found:true, value: raw});
                 return true;
             }
             postToParent({type:'nibSearchResult', found:false, value: raw});
             return false;
-        }
-
-        var isEditorActive = false;
-        function toggleEditor() {
-            isEditorActive = !isEditorActive;
-            if (isEditorActive) {
-                map.pm.addControls({
-                    position: 'topleft',
-                    drawMarker: false,
-                    drawCircleMarker: false,
-                    drawPolyline: false,
-                    drawRectangle: false,
-                    drawPolygon: true,
-                    editMode: true,
-                    dragMode: true,
-                    cutPolygon: false,
-                    removalMode: true
-                });
-            } else {
-                map.pm.removeControls();
-                if (map.pm.globalEditEnabled()) map.pm.disableGlobalEditMode();
-                if (map.pm.globalDragModeEnabled()) map.pm.disableGlobalDragMode();
-                if (map.pm.globalRemovalModeEnabled()) map.pm.disableGlobalRemovalMode();
-                if (map.pm.globalDrawModeEnabled()) map.pm.disableDraw();
-            }
-            postToParent({ type: 'editorStatus', active: isEditorActive });
         }
 
         window.addEventListener('message', function(event) {
@@ -1034,106 +1994,10 @@ body{
                 searchBidangByNIB(data.value);
             } else if (data.type === 'clearNibSearch') {
                 clearNibSearchResult();
-            } else if (data.type === 'toggleEdit') {
-                toggleEditor();
-            } else if (data.type === 'saveToGitHub') {
-                saveToGitHub(data.token, data.owner, data.repo, data.path);
-            } else if (data.type === 'exportGeoJSON') {
-                exportGeoJSONBackup();
             }
         });
 
         setTimeout(function(){ postToParent({type:'mapReady'}); }, 250);
-
-        map.on('pm:create', function(e) {
-          var layer = e.layer;
-          if (!layer.feature) {
-            layer.feature = {
-              type: 'Feature',
-              properties: {
-                NIB: '3404' + Math.floor(100000000 + Math.random() * 900000000),
-                NAMA: 'Pemilik Baru',
-                TIPE_HAK: 'Hak Milik',
-                LUAS_M2: 0,
-                DUSUN: 'BELURAN',
-                TAHUN: new Date().getFullYear(),
-                NOMOR: '',
-                KODE: ''
-              }
-            };
-          }
-          layer_BidangTanah_5.addLayer(layer);
-          if (typeof pop_BidangTanah_5 === 'function') {
-            pop_BidangTanah_5(layer.feature, layer);
-          }
-        });
-
-        function exportGeoJSONBackup() {
-          var data = layer_BidangTanah_5.toGeoJSON();
-          var content = "var json_BidangTanah_5 = " + JSON.stringify(data, null, 2) + ";\n";
-          var blob = new Blob([content], {type: "text/javascript;charset=utf-8"});
-          var url = URL.createObjectURL(blob);
-          var a = document.createElement('a');
-          a.href = url;
-          a.download = "BidangTanah_5.js";
-          document.body.appendChild(a);
-          a.click();
-          document.body.removeChild(a);
-          URL.revokeObjectURL(url);
-        }
-
-        async function saveToGitHub(githubToken, repoOwner, repoName, repoPath) {
-          if (!githubToken) {
-            postToParent({ type: 'saveStatus', success: false, message: 'Token GitHub belum diisi!' });
-            return;
-          }
-          try {
-            var geojsonData = layer_BidangTanah_5.toGeoJSON();
-            var fileContent = "";
-            if (repoPath.endsWith('.js')) {
-              fileContent = "var json_BidangTanah_5 = " + JSON.stringify(geojsonData, null, 2) + ";\n";
-            } else {
-              fileContent = JSON.stringify(geojsonData, null, 2);
-            }
-
-            var getUrl = `https://api.github.com/repos/${repoOwner}/${repoName}/contents/${repoPath}`;
-            var getRes = await fetch(getUrl, {
-              headers: { 'Authorization': `token ${githubToken}` }
-            });
-
-            if (!getRes.ok) {
-              throw new Error(`Gagal membaca file dari GitHub (${getRes.status} ${getRes.statusText}). Periksa Username (${repoOwner}), Nama Repo (${repoName}), dan Token.`);
-            }
-            var fileData = await getRes.json();
-            var currentSha = fileData.sha;
-
-            function utf8_to_b64(str) {
-              return window.btoa(unescape(encodeURIComponent(str)));
-            }
-
-            var putRes = await fetch(getUrl, {
-              method: 'PUT',
-              headers: {
-                'Authorization': `token ${githubToken}`,
-                'Content-Type': 'application/json'
-              },
-              body: JSON.stringify({
-                message: 'Update BidangTanah_5.js via WebGIS Editor',
-                content: utf8_to_b64(fileContent),
-                sha: currentSha
-              })
-            });
-
-            if (putRes.ok) {
-              postToParent({ type: 'saveStatus', success: true, message: 'Data berhasil disimpan & dicommit ke GitHub! Website publik akan terbarui dalam 1-2 menit.' });
-            } else {
-              var errData = await putRes.json();
-              throw new Error("Gagal menyimpan ke GitHub: " + (errData.message || putRes.statusText));
-            }
-          } catch(err) {
-            postToParent({ type: 'saveStatus', success: false, message: err.message });
-          }
-        }
 
         var Filters = {"OBJEK": "str","DUSUN": "str","TIPE_HAK": "str"};
         function filterFunc() {
@@ -1151,167 +2015,268 @@ body{
                   }
                     try{
                       if (key in features[0].properties){
-                        for (i = features.length - 1; i >= 0; --i){
-                          if (selection.indexOf(features[i].properties[key])<0 && selection.length>0) {
+                        for (i = features.length - 1;
+                          i >= 0; --i){
+                          if (selection.indexOf(
+                          features[i].properties[key])<0
+                          && selection.length>0) {
+                          features.splice(i,1);
+                          }
+                        }
+                      }
+                    } catch(err){
+                  }
+                }
+                if (Filters[key] == "int"){
+                  sliderVals =  document.getElementById(
+                    "div_" + keyS).noUiSlider.get();
+                  try{
+                    if (key in features[0].properties){
+                    for (i = features.length - 1; i >= 0; --i){
+                      if (parseInt(features[i].properties[key])
+                          < sliderVals[0]
+                          || parseInt(features[i].properties[key])
+                          > sliderVals[1]){
                             features.splice(i,1);
                           }
                         }
                       }
-                    } catch(err){}
+                    } catch(err){
+                    }
+                  }
+                if (Filters[key] == "real"){
+                  sliderVals =  document.getElementById(
+                    "div_" + keyS).noUiSlider.get();
+                  try{
+                    if (key in features[0].properties){
+                    for (i = features.length - 1; i >= 0; --i){
+                      if (features[i].properties[key]
+                          < sliderVals[0]
+                          || features[i].properties[key]
+                          > sliderVals[1]){
+                            features.splice(i,1);
+                          }
+                        }
+                      }
+                    } catch(err){
+                    }
+                  }
+                if (Filters[key] == "date"
+                  || Filters[key] == "datetime"
+                  || Filters[key] == "time"){
+                  try{
+                    if (key in features[0].properties){
+                      HTMLkey = key.replace(/[&\\/\\#,+()$~%.'":*?<>{} ]/g, '');
+                      startdate = document.getElementById("dat_" +
+                        HTMLkey + "_date1").value.replace(" ", "T");
+                      enddate = document.getElementById("dat_" +
+                        HTMLkey + "_date2").value.replace(" ", "T");
+                      for (i = features.length - 1; i >= 0; --i){
+                        if (features[i].properties[key] < startdate
+                          || features[i].properties[key] > enddate){
+                          features.splice(i,1);
+                        }
+                      }
+                    }
+                  } catch(err){
+                  }
                 }
               }
-            } catch(err){}
+            } catch(err){
+            }
           this[lyr["options"]["layerName"]].clearLayers();
           this[lyr["options"]["layerName"]].addData(features);
           }
           })
         }
-        document.getElementById("menu").appendChild(document.createElement("div"));
-        var div_OBJEK = document.createElement('div'); div_OBJEK.id = "div_OBJEK"; div_OBJEK.className= "filterselect";
-        document.getElementById("menu").appendChild(div_OBJEK);
-        sel_OBJEK = document.createElement('select'); sel_OBJEK.multiple = true; sel_OBJEK.size = 10; sel_OBJEK.id = "sel_OBJEK";
-        var OBJEK_options_str = "<option value='' unselected></option>";
-        sel_OBJEK.onchange = function(){filterFunc()};
-        OBJEK_options_str  += '<option value="Abyan Farma">Abyan Farma</option>';
-        OBJEK_options_str  += '<option value="Apotek">Apotek</option>';
-        OBJEK_options_str  += '<option value="Apotek Aminah">Apotek Aminah</option>';
-        OBJEK_options_str  += '<option value="Apotek Punggawa Farma Sidomoyo">Apotek Punggawa Farma Sidomoyo</option>';
-        OBJEK_options_str  += '<option value="BTS">BTS</option>';
-        OBJEK_options_str  += '<option value="Bhumi Andhara Villa">Bhumi Andhara Villa</option>';
-        OBJEK_options_str  += '<option value="Fasilitas Olahraga Lainnya">Fasilitas Olahraga Lainnya</option>';
-        OBJEK_options_str  += '<option value="Gedung">Gedung</option>';
-        OBJEK_options_str  += '<option value="Gedung Olahraga">Gedung Olahraga</option>';
-        OBJEK_options_str  += '<option value="Gereja">Gereja</option>';
-        OBJEK_options_str  += '<option value="Gereja Kristen Jawa Sanggrahan Godean">Gereja Kristen Jawa Sanggrahan Godean</option>';
-        OBJEK_options_str  += '<option value="Jasa">Jasa</option>';
-        OBJEK_options_str  += '<option value="Kandang / Peternakan">Kandang / Peternakan</option>';
-        OBJEK_options_str  += '<option value="Kantor Jasa Akuntan Ernima Sukmasari">Kantor Jasa Akuntan Ernima Sukmasari</option>';
-        OBJEK_options_str  += '<option value="Kantor Pemerintah">Kantor Pemerintah</option>';
-        OBJEK_options_str  += '<option value="Kebun/Perkebunan">Kebun/Perkebunan</option>';
-        OBJEK_options_str  += '<option value="Klinik">Klinik</option>';
-        OBJEK_options_str  += '<option value="Kost">Kost</option>';
-        OBJEK_options_str  += '<option value="Lapangan Futsal Rocket">Lapangan Futsal Rocket</option>';
-        OBJEK_options_str  += '<option value="Lapangan Olahraga">Lapangan Olahraga</option>';
-        OBJEK_options_str  += '<option value="Lapangan Voli Ngrenak Lor">Lapangan Voli Ngrenak Lor</option>';
-        OBJEK_options_str  += '<option value="Lapangan Voli Pete">Lapangan Voli Pete</option>';
-        OBJEK_options_str  += '<option value="MI Nurul Insani">MI Nurul Insani</option>';
-        OBJEK_options_str  += '<option value="Makam">Makam</option>';
-        OBJEK_options_str  += '<option value="Masjid">Masjid</option>';
-        OBJEK_options_str  += '<option value="Masjid Al-Barokah">Masjid Al-Barokah</option>';
-        OBJEK_options_str  += '<option value="Masjid Uswatun Hasanah">Masjid Uswatun Hasanah</option>';
-        OBJEK_options_str  += '<option value="Mushola">Mushola</option>';
-        OBJEK_options_str  += '<option value="Nglaras Roso Pasar Seni dan Kuliner">Nglaras Roso Pasar Seni dan Kuliner</option>';
-        OBJEK_options_str  += '<option value="Pabrik">Pabrik</option>';
-        OBJEK_options_str  += '<option value="Pasar Ikan Sidomoyo">Pasar Ikan Sidomoyo</option>';
-        OBJEK_options_str  += '<option value="Pembangkit Listrik">Pembangkit Listrik</option>';
-        OBJEK_options_str  += '<option value="Pendidikan Lain">Pendidikan Lain</option>';
-        OBJEK_options_str  += '<option value="Pergudangan">Pergudangan</option>';
-        OBJEK_options_str  += '<option value="Perkantoran">Perkantoran</option>';
-        OBJEK_options_str  += '<option value="Permukiman">Permukiman</option>';
-        OBJEK_options_str  += '<option value="Pertokoan">Pertokoan</option>';
-        OBJEK_options_str  += '<option value="Perumahan">Perumahan</option>';
-        OBJEK_options_str  += '<option value="Pesantren">Pesantren</option>';
-        OBJEK_options_str  += '<option value="Praktek Dokter Syaraf PKU dr Zamroni">Praktek Dokter Syaraf PKU dr Zamroni</option>';
-        OBJEK_options_str  += '<option value="Rocket Arena">Rocket Arena</option>';
-        OBJEK_options_str  += '<option value="Rocket Center / Head Office Rocket Chicken">Rocket Center / Head Office Rocket Chicken</option>';
-        OBJEK_options_str  += '<option value="Rocket Mini Soccer Field">Rocket Mini Soccer Field</option>';
-        OBJEK_options_str  += '<option value="Rocket Padel">Rocket Padel</option>';
-        OBJEK_options_str  += '<option value="Rocket Waterpark">Rocket Waterpark</option>';
-        OBJEK_options_str  += '<option value="Ruko">Ruko</option>';
-        OBJEK_options_str  += '<option value="Rumah Makan / Restoran">Rumah Makan / Restoran</option>';
-        OBJEK_options_str  += '<option value="Rumah makan / restoran">Rumah makan / restoran</option>';
-        OBJEK_options_str  += '<option value="SD / Setingkat">SD / Setingkat</option>';
-        OBJEK_options_str  += '<option value="SMP / Setingkat">SMP / Setingkat</option>';
-        OBJEK_options_str  += '<option value="SPBU">SPBU</option>';
-        OBJEK_options_str  += '<option value="Sawah irigasi">Sawah irigasi</option>';
-        OBJEK_options_str  += '<option value="Toko">Toko</option>';
-        OBJEK_options_str  += '<option value="Tugu Pete">Tugu Pete</option>';
-        OBJEK_options_str  += '<option value="UKM">UKM</option>';
-        OBJEK_options_str  += '<option value="Villa Santosa 7">Villa Santosa 7</option>';
-        sel_OBJEK.innerHTML = OBJEK_options_str;
-        div_OBJEK.appendChild(sel_OBJEK);
-        var lab_OBJEK = document.createElement('div'); lab_OBJEK.innerHTML = 'OBJEK'; lab_OBJEK.className = 'filterlabel'; div_OBJEK.appendChild(lab_OBJEK);
-        var reset_OBJEK = document.createElement('div'); reset_OBJEK.innerHTML = 'clear filter'; reset_OBJEK.className = 'filterlabel filter-reset-link';
-        reset_OBJEK.onclick = function() {
-            var options = document.getElementById("sel_OBJEK").options;
-            for (var i=0; i < options.length; i++) { options[i].selected = false; }
-            filterFunc();
-        };
-        div_OBJEK.appendChild(reset_OBJEK);
-
-        document.getElementById("menu").appendChild(document.createElement("div"));
-        var div_DUSUN = document.createElement('div'); div_DUSUN.id = "div_DUSUN"; div_DUSUN.className= "filterselect";
-        document.getElementById("menu").appendChild(div_DUSUN);
-        sel_DUSUN = document.createElement('select'); sel_DUSUN.multiple = true; sel_DUSUN.size = 10; sel_DUSUN.id = "sel_DUSUN";
-        var DUSUN_options_str = "<option value='' unselected></option>";
-        sel_DUSUN.onchange = function(){filterFunc()};
-        DUSUN_options_str  += '<option value="BELURAN">BELURAN</option>';
-        DUSUN_options_str  += '<option value="BIDANG - BELURAN1">BIDANG - BELURAN1</option>';
-        DUSUN_options_str  += '<option value="BIDANG - DUKUH">BIDANG - DUKUH</option>';
-        DUSUN_options_str  += '<option value="BIDANG - KARAKAN">BIDANG - KARAKAN</option>';
-        DUSUN_options_str  += '<option value="BIDANG - KARANGLO">BIDANG - KARANGLO</option>';
-        DUSUN_options_str  += '<option value="BIDANG - KIDUL">BIDANG - KIDUL</option>';
-        DUSUN_options_str  += '<option value="BIDANG - KRANDON1">BIDANG - KRANDON1</option>';
-        DUSUN_options_str  += '<option value="BIDANG - LOR">BIDANG - LOR</option>';
-        DUSUN_options_str  += '<option value="BIDANG - PETE">BIDANG - PETE</option>';
-        DUSUN_options_str  += '<option value="BIDANG - SAWAHAN">BIDANG - SAWAHAN</option>';
-        DUSUN_options_str  += '<option value="BIDANG - SIMPING">BIDANG - SIMPING</option>';
-        DUSUN_options_str  += '<option value="BIDANG - TEGALAN">BIDANG - TEGALAN</option>';
-        DUSUN_options_str  += '<option value="DUKUH">DUKUH</option>';
-        DUSUN_options_str  += '<option value="KARAKAN">KARAKAN</option>';
-        DUSUN_options_str  += '<option value="KARANGLO">KARANGLO</option>';
-        DUSUN_options_str  += '<option value="KRANDON">KRANDON</option>';
-        DUSUN_options_str  += '<option value="NGERNAK KIDUL">NGERNAK KIDUL</option>';
-        DUSUN_options_str  += '<option value="NGRENAK LOR">NGRENAK LOR</option>';
-        DUSUN_options_str  += '<option value="PETE">PETE</option>';
-        DUSUN_options_str  += '<option value="SAWAHAN">SAWAHAN</option>';
-        DUSUN_options_str  += '<option value="SIMPING">SIMPING</option>';
-        DUSUN_options_str  += '<option value="TEGALAN">TEGALAN</option>';
-        sel_DUSUN.innerHTML = DUSUN_options_str;
-        div_DUSUN.appendChild(sel_DUSUN);
-        var lab_DUSUN = document.createElement('div'); lab_DUSUN.innerHTML = 'DUSUN'; lab_DUSUN.className = 'filterlabel'; div_DUSUN.appendChild(lab_DUSUN);
-        var reset_DUSUN = document.createElement('div'); reset_DUSUN.innerHTML = 'clear filter'; reset_DUSUN.className = 'filterlabel filter-reset-link';
-        reset_DUSUN.onclick = function() {
-            var options = document.getElementById("sel_DUSUN").options;
-            for (var i=0; i < options.length; i++) { options[i].selected = false; }
-            filterFunc();
-        };
-        div_DUSUN.appendChild(reset_DUSUN);
-
-        document.getElementById("menu").appendChild(document.createElement("div"));
-        var div_TIPE_HAK = document.createElement('div'); div_TIPE_HAK.id = "div_TIPE_HAK"; div_TIPE_HAK.className= "filterselect";
-        document.getElementById("menu").appendChild(div_TIPE_HAK);
-        sel_TIPE_HAK = document.createElement('select'); sel_TIPE_HAK.multiple = true; sel_TIPE_HAK.size = 5; sel_TIPE_HAK.id = "sel_TIPE_HAK";
-        var TIPE_HAK_options_str = "<option value='' unselected></option>";
-        sel_TIPE_HAK.onchange = function(){filterFunc()};
-        TIPE_HAK_options_str  += '<option value="Hak Guna Bangunan">Hak Guna Bangunan</option>';
-        TIPE_HAK_options_str  += '<option value="Hak Milik">Hak Milik</option>';
-        TIPE_HAK_options_str  += '<option value="Hak Pakai">Hak Pakai</option>';
-        TIPE_HAK_options_str  += '<option value="Hak Wakaf">Hak Wakaf</option>';
-        TIPE_HAK_options_str  += '<option value="Kosong">Kosong</option>';
-        sel_TIPE_HAK.innerHTML = TIPE_HAK_options_str;
-        div_TIPE_HAK.appendChild(sel_TIPE_HAK);
-        var lab_TIPE_HAK = document.createElement('div'); lab_TIPE_HAK.innerHTML = 'TIPE_HAK'; lab_TIPE_HAK.className = 'filterlabel'; div_TIPE_HAK.appendChild(lab_TIPE_HAK);
-        var reset_TIPE_HAK = document.createElement('div'); reset_TIPE_HAK.innerHTML = 'clear filter'; reset_TIPE_HAK.className = 'filterlabel filter-reset-link';
-        reset_TIPE_HAK.onclick = function() {
-            var options = document.getElementById("sel_TIPE_HAK").options;
-            for (var i=0; i < options.length; i++) { options[i].selected = false; }
-            filterFunc();
-        };
-        div_TIPE_HAK.appendChild(reset_TIPE_HAK);
-
+            document.getElementById("menu").appendChild(
+                document.createElement("div"));
+            var div_OBJEK = document.createElement('div');
+            div_OBJEK.id = "div_OBJEK";
+            div_OBJEK.className= "filterselect";
+            document.getElementById("menu").appendChild(div_OBJEK);
+            sel_OBJEK = document.createElement('select');
+            sel_OBJEK.multiple = true;
+            sel_OBJEK.size = 10;
+            sel_OBJEK.id = "sel_OBJEK";
+            var OBJEK_options_str = "<option value='' unselected></option>";
+            sel_OBJEK.onchange = function(){filterFunc()};
+            OBJEK_options_str  += '<option value="Abyan Farma">Abyan Farma</option>';
+            OBJEK_options_str  += '<option value="Apotek">Apotek</option>';
+            OBJEK_options_str  += '<option value="Apotek Aminah">Apotek Aminah</option>';
+            OBJEK_options_str  += '<option value="Apotek Punggawa Farma Sidomoyo">Apotek Punggawa Farma Sidomoyo</option>';
+            OBJEK_options_str  += '<option value="BTS">BTS</option>';
+            OBJEK_options_str  += '<option value="Bhumi Andhara Villa">Bhumi Andhara Villa</option>';
+            OBJEK_options_str  += '<option value="Fasilitas Olahraga Lainnya">Fasilitas Olahraga Lainnya</option>';
+            OBJEK_options_str  += '<option value="Gedung">Gedung</option>';
+            OBJEK_options_str  += '<option value="Gedung Olahraga">Gedung Olahraga</option>';
+            OBJEK_options_str  += '<option value="Gereja">Gereja</option>';
+            OBJEK_options_str  += '<option value="Gereja Kristen Jawa Sanggrahan Godean">Gereja Kristen Jawa Sanggrahan Godean</option>';
+            OBJEK_options_str  += '<option value="Jasa">Jasa</option>';
+            OBJEK_options_str  += '<option value="Kandang / Peternakan">Kandang / Peternakan</option>';
+            OBJEK_options_str  += '<option value="Kantor Jasa Akuntan Ernima Sukmasari">Kantor Jasa Akuntan Ernima Sukmasari</option>';
+            OBJEK_options_str  += '<option value="Kantor Pemerintah">Kantor Pemerintah</option>';
+            OBJEK_options_str  += '<option value="Kebun/Perkebunan">Kebun/Perkebunan</option>';
+            OBJEK_options_str  += '<option value="Klinik">Klinik</option>';
+            OBJEK_options_str  += '<option value="Kost">Kost</option>';
+            OBJEK_options_str  += '<option value="Lapangan Futsal Rocket">Lapangan Futsal Rocket</option>';
+            OBJEK_options_str  += '<option value="Lapangan Olahraga">Lapangan Olahraga</option>';
+            OBJEK_options_str  += '<option value="Lapangan Voli Ngrenak Lor">Lapangan Voli Ngrenak Lor</option>';
+            OBJEK_options_str  += '<option value="Lapangan Voli Pete">Lapangan Voli Pete</option>';
+            OBJEK_options_str  += '<option value="MI Nurul Insani">MI Nurul Insani</option>';
+            OBJEK_options_str  += '<option value="Makam">Makam</option>';
+            OBJEK_options_str  += '<option value="Masjid">Masjid</option>';
+            OBJEK_options_str  += '<option value="Masjid Al-Barokah">Masjid Al-Barokah</option>';
+            OBJEK_options_str  += '<option value="Masjid Uswatun Hasanah">Masjid Uswatun Hasanah</option>';
+            OBJEK_options_str  += '<option value="Mushola">Mushola</option>';
+            OBJEK_options_str  += '<option value="Nglaras Roso Pasar Seni dan Kuliner">Nglaras Roso Pasar Seni dan Kuliner</option>';
+            OBJEK_options_str  += '<option value="Pabrik">Pabrik</option>';
+            OBJEK_options_str  += '<option value="Pasar Ikan Sidomoyo">Pasar Ikan Sidomoyo</option>';
+            OBJEK_options_str  += '<option value="Pembangkit Listrik">Pembangkit Listrik</option>';
+            OBJEK_options_str  += '<option value="Pendidikan Lain">Pendidikan Lain</option>';
+            OBJEK_options_str  += '<option value="Pergudangan">Pergudangan</option>';
+            OBJEK_options_str  += '<option value="Perkantoran">Perkantoran</option>';
+            OBJEK_options_str  += '<option value="Permukiman">Permukiman</option>';
+            OBJEK_options_str  += '<option value="Pertokoan">Pertokoan</option>';
+            OBJEK_options_str  += '<option value="Perumahan">Perumahan</option>';
+            OBJEK_options_str  += '<option value="Pesantren">Pesantren</option>';
+            OBJEK_options_str  += '<option value="Praktek Dokter Syaraf PKU dr Zamroni">Praktek Dokter Syaraf PKU dr Zamroni</option>';
+            OBJEK_options_str  += '<option value="Rocket Arena">Rocket Arena</option>';
+            OBJEK_options_str  += '<option value="Rocket Center / Head Office Rocket Chicken">Rocket Center / Head Office Rocket Chicken</option>';
+            OBJEK_options_str  += '<option value="Rocket Mini Soccer Field">Rocket Mini Soccer Field</option>';
+            OBJEK_options_str  += '<option value="Rocket Padel">Rocket Padel</option>';
+            OBJEK_options_str  += '<option value="Rocket Waterpark">Rocket Waterpark</option>';
+            OBJEK_options_str  += '<option value="Ruko">Ruko</option>';
+            OBJEK_options_str  += '<option value="Rumah Makan / Restoran">Rumah Makan / Restoran</option>';
+            OBJEK_options_str  += '<option value="Rumah makan / restoran">Rumah makan / restoran</option>';
+            OBJEK_options_str  += '<option value="SD / Setingkat">SD / Setingkat</option>';
+            OBJEK_options_str  += '<option value="SMP / Setingkat">SMP / Setingkat</option>';
+            OBJEK_options_str  += '<option value="SPBU">SPBU</option>';
+            OBJEK_options_str  += '<option value="Sawah irigasi">Sawah irigasi</option>';
+            OBJEK_options_str  += '<option value="Toko">Toko</option>';
+            OBJEK_options_str  += '<option value="Tugu Pete">Tugu Pete</option>';
+            OBJEK_options_str  += '<option value="UKM">UKM</option>';
+            OBJEK_options_str  += '<option value="Villa Santosa 7">Villa Santosa 7</option>';
+            sel_OBJEK.innerHTML = OBJEK_options_str;
+            div_OBJEK.appendChild(sel_OBJEK);
+            var lab_OBJEK = document.createElement('div');
+            lab_OBJEK.innerHTML = 'OBJEK';
+            lab_OBJEK.className = 'filterlabel';
+            div_OBJEK.appendChild(lab_OBJEK);
+            var reset_OBJEK = document.createElement('div');
+            reset_OBJEK.innerHTML = 'clear filter';
+            reset_OBJEK.className = 'filterlabel filter-reset-link';
+            reset_OBJEK.onclick = function() {
+                var options = document.getElementById("sel_OBJEK").options;
+                for (var i=0; i < options.length; i++) {
+                    options[i].selected = false;
+                }
+                filterFunc();
+            };
+            div_OBJEK.appendChild(reset_OBJEK);
+            document.getElementById("menu").appendChild(
+                document.createElement("div"));
+            var div_DUSUN = document.createElement('div');
+            div_DUSUN.id = "div_DUSUN";
+            div_DUSUN.className= "filterselect";
+            document.getElementById("menu").appendChild(div_DUSUN);
+            sel_DUSUN = document.createElement('select');
+            sel_DUSUN.multiple = true;
+            sel_DUSUN.size = 10;
+            sel_DUSUN.id = "sel_DUSUN";
+            var DUSUN_options_str = "<option value='' unselected></option>";
+            sel_DUSUN.onchange = function(){filterFunc()};
+            DUSUN_options_str  += '<option value="BELURAN">BELURAN</option>';
+            DUSUN_options_str  += '<option value="BIDANG - BELURAN1">BIDANG - BELURAN1</option>';
+            DUSUN_options_str  += '<option value="BIDANG - DUKUH">BIDANG - DUKUH</option>';
+            DUSUN_options_str  += '<option value="BIDANG - KARAKAN">BIDANG - KARAKAN</option>';
+            DUSUN_options_str  += '<option value="BIDANG - KARANGLO">BIDANG - KARANGLO</option>';
+            DUSUN_options_str  += '<option value="BIDANG - KIDUL">BIDANG - KIDUL</option>';
+            DUSUN_options_str  += '<option value="BIDANG - KRANDON1">BIDANG - KRANDON1</option>';
+            DUSUN_options_str  += '<option value="BIDANG - LOR">BIDANG - LOR</option>';
+            DUSUN_options_str  += '<option value="BIDANG - PETE">BIDANG - PETE</option>';
+            DUSUN_options_str  += '<option value="BIDANG - SAWAHAN">BIDANG - SAWAHAN</option>';
+            DUSUN_options_str  += '<option value="BIDANG - SIMPING">BIDANG - SIMPING</option>';
+            DUSUN_options_str  += '<option value="BIDANG - TEGALAN">BIDANG - TEGALAN</option>';
+            DUSUN_options_str  += '<option value="DUKUH">DUKUH</option>';
+            DUSUN_options_str  += '<option value="KARAKAN">KARAKAN</option>';
+            DUSUN_options_str  += '<option value="KARANGLO">KARANGLO</option>';
+            DUSUN_options_str  += '<option value="KRANDON">KRANDON</option>';
+            DUSUN_options_str  += '<option value="NGERNAK KIDUL">NGERNAK KIDUL</option>';
+            DUSUN_options_str  += '<option value="NGRENAK LOR">NGRENAK LOR</option>';
+            DUSUN_options_str  += '<option value="PETE">PETE</option>';
+            DUSUN_options_str  += '<option value="SAWAHAN">SAWAHAN</option>';
+            DUSUN_options_str  += '<option value="SIMPING">SIMPING</option>';
+            DUSUN_options_str  += '<option value="TEGALAN">TEGALAN</option>';
+            sel_DUSUN.innerHTML = DUSUN_options_str;
+            div_DUSUN.appendChild(sel_DUSUN);
+            var lab_DUSUN = document.createElement('div');
+            lab_DUSUN.innerHTML = 'DUSUN';
+            lab_DUSUN.className = 'filterlabel';
+            div_DUSUN.appendChild(lab_DUSUN);
+            var reset_DUSUN = document.createElement('div');
+            reset_DUSUN.innerHTML = 'clear filter';
+            reset_DUSUN.className = 'filterlabel filter-reset-link';
+            reset_DUSUN.onclick = function() {
+                var options = document.getElementById("sel_DUSUN").options;
+                for (var i=0; i < options.length; i++) {
+                    options[i].selected = false;
+                }
+                filterFunc();
+            };
+            div_DUSUN.appendChild(reset_DUSUN);
+            document.getElementById("menu").appendChild(
+                document.createElement("div"));
+            var div_TIPE_HAK = document.createElement('div');
+            div_TIPE_HAK.id = "div_TIPE_HAK";
+            div_TIPE_HAK.className= "filterselect";
+            document.getElementById("menu").appendChild(div_TIPE_HAK);
+            sel_TIPE_HAK = document.createElement('select');
+            sel_TIPE_HAK.multiple = true;
+            sel_TIPE_HAK.size = 5;
+            sel_TIPE_HAK.id = "sel_TIPE_HAK";
+            var TIPE_HAK_options_str = "<option value='' unselected></option>";
+            sel_TIPE_HAK.onchange = function(){filterFunc()};
+            TIPE_HAK_options_str  += '<option value="Hak Guna Bangunan">Hak Guna Bangunan</option>';
+            TIPE_HAK_options_str  += '<option value="Hak Milik">Hak Milik</option>';
+            TIPE_HAK_options_str  += '<option value="Hak Pakai">Hak Pakai</option>';
+            TIPE_HAK_options_str  += '<option value="Hak Wakaf">Hak Wakaf</option>';
+            TIPE_HAK_options_str  += '<option value="Kosong">Kosong</option>';
+            sel_TIPE_HAK.innerHTML = TIPE_HAK_options_str;
+            div_TIPE_HAK.appendChild(sel_TIPE_HAK);
+            var lab_TIPE_HAK = document.createElement('div');
+            lab_TIPE_HAK.innerHTML = 'TIPE_HAK';
+            lab_TIPE_HAK.className = 'filterlabel';
+            div_TIPE_HAK.appendChild(lab_TIPE_HAK);
+            var reset_TIPE_HAK = document.createElement('div');
+            reset_TIPE_HAK.innerHTML = 'clear filter';
+            reset_TIPE_HAK.className = 'filterlabel filter-reset-link';
+            reset_TIPE_HAK.onclick = function() {
+                var options = document.getElementById("sel_TIPE_HAK").options;
+                for (var i=0; i < options.length; i++) {
+                    options[i].selected = false;
+                }
+                filterFunc();
+            };
+            div_TIPE_HAK.appendChild(reset_TIPE_HAK);
         setTimeout(function() {
             var searchInput = document.querySelector('.leaflet-control-search .search-input');
-            if (searchInput) { searchInput.setAttribute('placeholder', 'Cari NIB bidang tanah...'); }
+            if (searchInput) {
+                searchInput.setAttribute('placeholder', 'Cari NIB bidang tanah...');
+            }
             var searchBtn = document.querySelector('.leaflet-control-search .search-button');
-            if (searchBtn) { searchBtn.title = 'Cari NIB'; }
+            if (searchBtn) {
+                searchBtn.title = 'Cari NIB';
+            }
             var resetAllBtn = document.getElementById('resetAllFiltersBtn');
             if (resetAllBtn) {
                 resetAllBtn.addEventListener('click', function(){
                     ['sel_OBJEK','sel_DUSUN','sel_TIPE_HAK'].forEach(function(id){
                         var el = document.getElementById(id);
                         if (!el) return;
-                        for (var i = 0; i < el.options.length; i++) { el.options[i].selected = false; }
+                        for (var i = 0; i < el.options.length; i++) {
+                            el.options[i].selected = false;
+                        }
                     });
                     filterFunc();
                 });
@@ -1326,9 +2291,174 @@ body{
         }, 120);
 
         resetLabels([layer_BidangTanah_5]);
-        map.on("zoomend", function(){ resetLabels([layer_BidangTanah_5]); });
-        map.on("layeradd", function(){ resetLabels([layer_BidangTanah_5]); });
-        map.on("layerremove", function(){ resetLabels([layer_BidangTanah_5]); });
+        map.on("zoomend", function(){
+            resetLabels([layer_BidangTanah_5]);
+        });
+        map.on("layeradd", function(){
+            resetLabels([layer_BidangTanah_5]);
+        });
+        map.on("layerremove", function(){
+            resetLabels([layer_BidangTanah_5]);
+        });
         </script>        
+    <script>
+/* ===== Admin: edit atribut data, disimpan ke GitHub lewat API ===== */
+(function(){
+'use strict';
+var LAYERS=[
+{k:'BidangTanah_5',n:'Bidang tanah',L:layer_BidangTanah_5,pop:['LUAS_M2','NOMOR','NIB','TAHUN','TIPE_HAK','NAMA','KODE','DUSUN'],wide:['NIB']},
+{k:'FasilitasUmum_6',n:'Fasilitas umum',L:layer_FasilitasUmum_6,pop:['fid','OBJEK','KATEGORI'],wide:['OBJEK']},
+{k:'PenggunaanLahan_4',n:'Penggunaan lahan',L:layer_PenggunaanLahan_4,pop:['OBJEK','KATEGORI'],wide:['OBJEK']},
+{k:'TutupanLahan_0',n:'Tutupan lahan',L:layer_TutupanLahan_0,pop:['LUAS_M2','SUMBER','OBJEK','KELURAHAN'],wide:['OBJEK']},
+{k:'Jalan_3',n:'Jalan',L:layer_Jalan_3,pop:['fid','TIPE_JALAN'],wide:['TIPE_JALAN']},
+{k:'Sungai_2',n:'Sungai',L:layer_Sungai_2,pop:['NAMOBJ','REMARK','LCODE'],wide:['NAMOBJ']},
+{k:'BatasDusun_1',n:'Batas dusun',L:layer_BatasDusun_1,pop:['DUSUN'],wide:['DUSUN']}
+];
+var RO=['fid'],MAXOPT=60,SC={},hl=null;
+var S={cfg:{},token:sessionStorage.getItem('wg_tok')||'',user:null,on:false,active:LAYERS[0],sel:null,ed:{},msg:null,f:{},inputs:{},busy:false};
+LAYERS.forEach(function(l){l.pane='pane_'+l.k;l.data=function(){return window['json_'+l.k];};S.ed[l.k]=new Map();});
+
+/* ---------- util ---------- */
+function h(t,a,c){var e=document.createElement(t);for(var k in a||{}){var v=a[k];if(v===false||v==null)continue;if(k.slice(0,2)==='on')e.addEventListener(k.slice(2),v);else if(k==='class')e.className=v;else e.setAttribute(k,v);}
+  [].concat(c==null?[]:c).forEach(function(x){e.appendChild(typeof x==='string'?document.createTextNode(x):x);});return e;}
+function esc(s){return String(s).replace(/[&<>"']/g,function(c){return {'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;',"'":'&#39;'}[c];});}
+function detect(){var host=location.hostname,p=location.pathname.split('/').filter(Boolean),c={owner:'',repo:'',branch:'',dir:''};
+  if(/\.github\.io$/.test(host)){c.owner=host.split('.')[0];c.repo=(p.length&&!/\.html?$/.test(p[0]))?p[0]:host;}
+  try{Object.assign(c,JSON.parse(localStorage.getItem('wg_cfg')||'{}'));}catch(e){}
+  return c;}
+function schema(l){if(SC[l.k])return SC[l.k];var keys=[],t={},o={};
+  l.data().features.forEach(function(f){var p=f.properties||{};for(var k in p){if(!(k in t)){keys.push(k);t[k]=null;o[k]=new Set();}var v=p[k];if(v==null)continue;
+    t[k]=(t[k]==null||t[k]==='number')&&typeof v==='number'?'number':'string';
+    if(o[k]){o[k].add(String(v));if(o[k].size>MAXOPT)o[k]=null;}}});
+  keys.forEach(function(k){if(!t[k])t[k]='string';});
+  return SC[l.k]={keys:keys,types:t,opts:o};}
+function stats(){var n=0,o=0;LAYERS.forEach(function(l){S.ed[l.k].forEach(function(r){o++;n+=Object.keys(r).length;});});return {n:n,o:o};}
+function popHtml(l,f){return '<table>'+l.pop.map(function(p){var v=f.properties[p];v=v==null?'':autolinker.link(esc(v));
+  return l.wide.indexOf(p)>-1?'<tr><td colspan="2"><strong>'+p+'</strong><br />'+v+'</td></tr>':'<tr><th scope="row">'+p+'</th><td>'+v+'</td></tr>';}).join('')+'</table>';}
+
+/* ---------- peta: sorotan, refresh, mode edit ---------- */
+function hlClear(){if(hl){map.removeLayer(hl);hl=null;}}
+function hlDraw(l,f){hlClear();hl=L.geoJSON(f,{pane:l.pane,interactive:false,
+  style:function(){return {color:'#d62828',weight:4,opacity:1,fillColor:'#ffbe0b',fillOpacity:.25};},
+  pointToLayer:function(ft,ll){return L.circleMarker(ll,{pane:l.pane,radius:9,color:'#d62828',weight:3,fillColor:'#ffbe0b',fillOpacity:.6,interactive:false});}}).addTo(map);}
+function refresh(l,f){var s=null;l.L.eachLayer(function(x){if(x.feature===f)s=x;});
+  if(s){try{s.setPopupContent(popHtml(l,f));}catch(e){}try{l.L.resetStyle(s);}catch(e){}}
+  if(S.sel&&S.sel.f===f)hlDraw(l,f);}
+function paneDim(){LAYERS.forEach(function(x){var p=map.getPane(x.pane);if(p)p.classList.toggle('wg-dim',S.on&&x!==S.active);});}
+function setOn(v){S.on=!!v;paneDim();if(!S.on){hlClear();S.sel=null;}render();}
+function setActive(l){S.active=l;if(!map.hasLayer(l.L))map.addLayer(l.L);S.sel=null;hlClear();paneDim();render();}
+
+/* ---------- edit lokal ---------- */
+function applyForm(){var l=S.sel.l,f=S.sel.f,sc=schema(l),out={};
+  for(var i=0;i<sc.keys.length;i++){var k=sc.keys[i];if(RO.indexOf(k)>-1)continue;var raw=S.inputs[k].value.trim(),v=raw===''?null:raw;
+    if(v!==null&&sc.types[k]==='number'){v=Number(raw.replace(',','.'));if(!isFinite(v))return say('err','Kolom '+k+' harus berupa angka.');}
+    out[k]=v;}
+  var m=S.ed[l.k],rec=m.get(f)||{};
+  for(var key in out){var cur=f.properties[key];if(cur===undefined)cur=null;if(cur===out[key])continue;
+    var b=rec[key]?rec[key].b:cur;if(b===out[key])delete rec[key];else rec[key]={b:b,a:out[key]};f.properties[key]=out[key];}
+  if(Object.keys(rec).length)m.set(f,rec);else m['delete'](f);
+  refresh(l,f);say('ok','Perubahan diterapkan di peta. Klik "Simpan ke GitHub" agar permanen.',true);}
+function revert(l,f){var rec=S.ed[l.k].get(f);if(!rec)return;for(var k in rec)f.properties[k]=rec[k].b;S.ed[l.k]['delete'](f);refresh(l,f);}
+function discard(){LAYERS.forEach(function(l){Array.from(S.ed[l.k].keys()).forEach(function(f){revert(l,f);});});S.sel=null;hlClear();}
+
+/* ---------- GitHub API ---------- */
+async function gh(path,o){o=o||{};
+  var r=await fetch('https://api.github.com'+path,{method:o.m||'GET',headers:Object.assign({Authorization:'Bearer '+S.token,Accept:o.raw?'application/vnd.github.raw+json':'application/vnd.github+json'},o.b?{'Content-Type':'application/json'}:{}),body:o.b?JSON.stringify(o.b):undefined});
+  if(!r.ok){var j={};try{j=await r.json();}catch(e){}throw new Error(r.status+' '+(j.message||r.statusText));}
+  return o.raw?r.text():r.json();}
+async function verify(c){var u=await gh('/user'),rp=await gh('/repos/'+c.owner+'/'+c.repo);
+  if(rp.permissions&&rp.permissions.push===false)throw new Error('akun @'+u.login+' tidak punya izin menulis ke repository ini.');
+  c.branch=c.branch||rp.default_branch;S.user=u.login;S.cfg=c;localStorage.setItem('wg_cfg',JSON.stringify(c));}
+function ser(fc){var hd=[];Object.keys(fc).forEach(function(k){if(k!=='features')hd.push(JSON.stringify(k)+': '+JSON.stringify(fc[k]));});
+  return '{\n'+hd.join(',\n')+',\n"features": [\n'+fc.features.map(function(x){return JSON.stringify(x);}).join(',\n')+'\n]\n}';}
+function conflict(p){return new Error('Isi '+p+' di GitHub berbeda dari data di halaman ini (ada perubahan lain, atau halaman memuat data lama dari cache). Muat ulang dengan Ctrl+F5 lalu ulangi edit.');}
+async function save(){var dirty=LAYERS.filter(function(l){return S.ed[l.k].size;});if(!dirty.length)return;
+  S.busy=true;say('info','Menyimpan ke GitHub... jangan tutup halaman.',true);
+  var c=S.cfg,b='/repos/'+c.owner+'/'+c.repo,dir=c.dir?c.dir.replace(/^\/+|\/+$/g,'')+'/':'';
+  try{
+    var ref=await gh(b+'/git/ref/heads/'+c.branch),base=await gh(b+'/git/commits/'+ref.object.sha),tree=[];
+    for(var n=0;n<dirty.length;n++){var l=dirty[n],path=dir+'data/'+l.k+'.js';
+      var txt=await gh(b+'/contents/'+path.split('/').map(encodeURIComponent).join('/')+'?ref='+encodeURIComponent(c.branch),{raw:true});
+      var i=txt.indexOf('{'),j=txt.lastIndexOf('}');if(i<0||j<i)throw new Error('format '+path+' tidak dikenali.');
+      var fc=JSON.parse(txt.slice(i,j+1)),loc=l.data().features;if(fc.features.length!==loc.length)throw conflict(path);
+      S.ed[l.k].forEach(function(rec,f){var rf=fc.features[loc.indexOf(f)];if(!rf)throw conflict(path);
+        for(var k in rec){var cur=rf.properties[k];if(cur===undefined)cur=null;if(cur!==rec[k].b)throw conflict(path);rf.properties[k]=rec[k].a;}});
+      var blob=await gh(b+'/git/blobs',{m:'POST',b:{content:txt.slice(0,i)+ser(fc)+txt.slice(j+1),encoding:'utf-8'}});
+      tree.push({path:path,mode:'100644',type:'blob',sha:blob.sha});}
+    var nt=await gh(b+'/git/trees',{m:'POST',b:{base_tree:base.tree.sha,tree:tree}});
+    var msg='Edit data WebGIS: '+dirty.map(function(l){return l.n+' ('+S.ed[l.k].size+' objek)';}).join(', ')+' oleh @'+S.user;
+    var nc=await gh(b+'/git/commits',{m:'POST',b:{message:msg,tree:nt.sha,parents:[ref.object.sha]}});
+    await gh(b+'/git/refs/heads/'+c.branch,{m:'PATCH',b:{sha:nc.sha}});
+    dirty.forEach(function(l){S.ed[l.k].clear();});S.busy=false;
+    say('ok','Tersimpan di GitHub. Situs akan diperbarui dalam 1-2 menit (tekan Ctrl+F5 untuk melihat data terbaru).',true,'https://github.com/'+c.owner+'/'+c.repo+'/commit/'+nc.sha);
+  }catch(e){S.busy=false;var m=e.message;if(/^(401|403|404)/.test(m))m+=' - periksa izin token (Contents: Read and write) dan nama repository/branch.';say('err','Gagal menyimpan: '+m,true);}}
+
+/* ---------- tampilan panel ---------- */
+function say(t,x,full,href){S.msg={t:t,x:x,href:href};if(full)return render();
+  if(S.msgEl){S.msgEl.className='wg-msg '+t;S.msgEl.textContent=x;}}
+function fld(label,id,val,type,ph){var i=h('input',{type:type||'text',value:val||false,placeholder:ph||false,autocomplete:'off',spellcheck:'false'});S.f[id]=i;return h('label',{class:'wg-f'},[h('span',{},label),i]);}
+async function login(){var c={owner:S.f.owner.value.trim(),repo:S.f.repo.value.trim(),branch:S.f.branch.value.trim(),dir:S.f.dir.value.trim()};S.token=S.f.token.value.trim();
+  if(!S.token||!c.owner||!c.repo)return say('err','Isi token, pemilik, dan nama repository.');
+  say('info','Memeriksa akses...');
+  try{await verify(c);sessionStorage.setItem('wg_tok',S.token);say('ok','Berhasil masuk sebagai @'+S.user+'.',true);}
+  catch(e){S.token='';say('err','Gagal masuk: '+e.message);}}
+function logout(){if(stats().n&&!confirm('Ada perubahan yang belum disimpan dan akan dibatalkan. Tetap keluar?'))return;
+  discard();sessionStorage.removeItem('wg_tok');S.token='';S.user=null;S.msg=null;setOn(false);}
+function loginView(B){var c=S.cfg;S.f={};
+  B.appendChild(h('p',{class:'wg-note'},'Perubahan disimpan langsung ke repository GitHub, sehingga hanya akun dengan izin tulis yang bisa menyimpan. Gunakan fine-grained token dengan akses Contents: Read and write khusus repository ini.'));
+  B.appendChild(fld('Token GitHub','token','','password','github_pat_...'));
+  B.appendChild(h('details',{open:c.owner&&c.repo?false:'open'},[h('summary',{},'Pengaturan repository'),
+    fld('Pemilik repository','owner',c.owner),fld('Nama repository','repo',c.repo),
+    fld('Branch (kosong = default)','branch',c.branch),fld('Folder situs (kosong jika di root)','dir',c.dir)]));
+  B.appendChild(h('button',{class:'menu-btn primary',onclick:login},'Masuk'));}
+function formView(){var l=S.sel.l,f=S.sel.f,sc=schema(l),p=f.properties,box=h('div',{class:'wg-form'});S.inputs={};
+  box.appendChild(h('h4',{},l.n+': '+(p.NIB||p.NAMOBJ||p.OBJEK||p.DUSUN||'#'+p.fid)));
+  sc.keys.forEach(function(k){var ro=RO.indexOf(k)>-1,v=p[k],id='wgdl_'+k.replace(/\W/g,'_');
+    var inp=h('input',{type:'text',value:v==null?false:String(v),disabled:ro?'disabled':false,autocomplete:'off',list:!ro&&sc.opts[k]?id:false,
+      onkeydown:function(e){if(e.key==='Enter')applyForm();}});S.inputs[k]=inp;
+    if(!ro&&sc.opts[k])box.appendChild(h('datalist',{id:id},Array.from(sc.opts[k]).sort().map(function(o){return h('option',{value:o});})));
+    box.appendChild(h('label',{class:'wg-f'},[h('span',{},k+(ro?' (tidak dapat diubah)':sc.types[k]==='number'?' (angka)':'')),inp]));});
+  box.appendChild(h('div',{class:'wg-row'},[
+    h('button',{class:'menu-btn primary',onclick:applyForm},'Terapkan'),
+    h('button',{class:'menu-btn',onclick:function(){revert(l,f);render();}},'Kembalikan'),
+    h('button',{class:'menu-btn',onclick:function(){S.sel=null;hlClear();render();}},'Tutup form')]));
+  return box;}
+function adminView(B){var st=stats(),l=S.active;
+  B.appendChild(h('label',{class:'wg-sw'},[h('input',{type:'checkbox',checked:S.on?'checked':false,onchange:function(e){setOn(e.target.checked);}}),h('span',{},'Mode edit')]));
+  B.appendChild(h('label',{class:'wg-f'},[h('span',{},'Layer yang diedit'),h('select',{onchange:function(e){setActive(LAYERS[+e.target.value]);}},
+    LAYERS.map(function(x,i){return h('option',{value:i,selected:x===l?'selected':false},x.n);}))]));
+  if(S.on&&S.sel)B.appendChild(formView());
+  else if(S.on)B.appendChild(h('p',{class:'wg-note'},'Klik satu objek '+l.n.toLowerCase()+' di peta untuk membuka formulir atributnya.'));
+  else B.appendChild(h('p',{class:'wg-note'},'Aktifkan mode edit, pilih layer, lalu klik objek di peta.'));
+  B.appendChild(h('div',{class:'wg-pend'},[h('strong',{},st.n?st.n+' kolom di '+st.o+' objek belum disimpan':'Belum ada perubahan'),
+    h('div',{class:'wg-row'},[
+      h('button',{class:'menu-btn primary',disabled:st.n&&!S.busy?false:'disabled',onclick:save},'Simpan ke GitHub'),
+      h('button',{class:'menu-btn',disabled:st.n&&!S.busy?false:'disabled',onclick:function(){if(confirm('Batalkan semua perubahan yang belum disimpan?')){discard();render();}}},'Batalkan semua'),
+      h('button',{class:'menu-btn',onclick:logout},'Keluar')])]));}
+function render(){var P=S.panel;P.innerHTML='';
+  P.appendChild(h('div',{class:'wg-head'},[h('div',{},[h('strong',{},'Admin: edit data'),h('small',{},S.user?'@'+S.user+' - '+S.cfg.owner+'/'+S.cfg.repo:'Masuk untuk mengedit data')]),
+    h('button',{class:'wg-x',title:'Tutup',onclick:function(){P.classList.remove('open');}},'\u00d7')]));
+  var B=h('div',{class:'wg-body'});P.appendChild(B);S.user?adminView(B):loginView(B);
+  S.msgEl=h('div',{class:'wg-msg '+(S.msg?S.msg.t:'')},S.msg?S.msg.x:'');
+  if(S.msg&&S.msg.href)S.msgEl.appendChild(h('a',{href:S.msg.href,target:'_blank',rel:'noopener'},' Lihat commit'));
+  B.appendChild(S.msgEl);}
+
+/* ---------- inisialisasi ---------- */
+S.cfg=detect();
+S.panel=h('div',{id:'wgAdmin'});document.getElementById('all').appendChild(S.panel);
+L.DomEvent.disableClickPropagation(S.panel);L.DomEvent.disableScrollPropagation(S.panel);
+var ctl=L.control({position:'topleft'});
+ctl.onAdd=function(){var d=L.DomUtil.create('div','leaflet-bar wg-ctl'),a=L.DomUtil.create('a','fas fa-user-shield',d);
+  a.href='#';a.title='Admin: edit data';a.setAttribute('role','button');L.DomEvent.disableClickPropagation(d);
+  L.DomEvent.on(a,'click',function(e){L.DomEvent.preventDefault(e);S.panel.classList.toggle('open');});return d;};
+ctl.addTo(map);
+LAYERS.forEach(function(l){l.L.on('click',function(e){if(!S.on||!S.user||S.active!==l)return;var t=e.propagatedFrom||e.layer;if(!t||!t.feature)return;
+  S.sel={l:l,f:t.feature};hlDraw(l,t.feature);S.panel.classList.add('open');render();});});
+window.addEventListener('message',function(e){if(e.data&&e.data.type==='toggleAdminPanel')S.panel.classList.toggle('open');});
+window.addEventListener('beforeunload',function(e){if(stats().n){e.preventDefault();e.returnValue='';}});
+render();
+if(S.token&&S.cfg.owner&&S.cfg.repo)verify(S.cfg).then(function(){render();}).catch(function(){S.token='';sessionStorage.removeItem('wg_tok');});
+})();
+</script>
     </body>
 </html>
